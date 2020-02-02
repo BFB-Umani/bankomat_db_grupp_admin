@@ -2,7 +2,7 @@ package bankomat.Controller;
 
 import bankomat.Model.Admin;
 import bankomat.Model.Database;
-import bankomat.Model.Main;
+import bankomat.Main;
 import bankomat.View.AdminLoginScene;
 
 public class AdminLoginSceneController {
@@ -27,11 +27,16 @@ public class AdminLoginSceneController {
         adminLoginScene.getLoginButton().setOnAction(actionEvent -> {
             input1 = adminLoginScene.getNameField().getText();
             input2 = adminLoginScene.getPasswdField().getText();
+
+            // kod för inlogg.
+
+            changeToAdminHub();
+
         });
 
     }
 
-    public void changeToAdminLogin() {
-        main.goToAdminLogin();
+    public void changeToAdminHub() {
+        main.goToAdminHubScene();
     }
 }

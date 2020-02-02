@@ -11,19 +11,18 @@ import javafx.scene.layout.VBox;
 
 public class AdminLoginScene {
     private VBox designLayout = new VBox();
-    private Label bankomat = new Label("Admin Login");
+    private Label adminLogin = new Label("Admin Login");
     private HBox nameArea = new HBox();
     private HBox passwdArea = new HBox();
     private Label name = new Label("Name:          ");
     private Label passwd = new Label("Password:    ");
     private TextField nameField = new TextField();
     private TextField passwdField = new TextField();
-    private Button loginButton = new Button("        login/\n" +
-            "create account");
+    private Button loginButton = new Button("login");
 
 
     public void setUp() {
-        designLayout.getChildren().add(bankomat);
+        designLayout.getChildren().add(adminLogin);
         designLayout.getChildren().add(nameArea);
         designLayout.getChildren().add(passwdArea);
 
@@ -36,11 +35,11 @@ public class AdminLoginScene {
         buttonLayout.getChildren().add(loginButton);
         designLayout.getChildren().add(buttonLayout);
 
-        bankomat.setPrefSize(300,275);
-        bankomat.setMaxWidth(Double.MAX_VALUE);
-        bankomat.setAlignment(Pos.CENTER);
+        adminLogin.setPrefSize(300,275);
+        adminLogin.setMaxWidth(Double.MAX_VALUE);
+        adminLogin.setAlignment(Pos.CENTER);
         designLayout.setId("background");
-        bankomat.setId("titelText");
+        adminLogin.setId("titelText");
 
         nameArea.setAlignment(Pos.CENTER);
         passwdArea.setAlignment(Pos.CENTER);
@@ -64,8 +63,8 @@ public class AdminLoginScene {
         return designLayout;
     }
 
-    public Label getBankomat() {
-        return bankomat;
+    public Label getAdminLogin() {
+        return adminLogin;
     }
 
     public Label getName() {
