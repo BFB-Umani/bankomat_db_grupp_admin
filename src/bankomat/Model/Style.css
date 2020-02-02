@@ -1,0 +1,23 @@
+.button{
+    -fx-background-color: #ffffff;
+    -fx-font-family: "Arial Narrow";
+}
+
+#background{
+    -fx-background-color: #e4e4e4;
+
+}
+
+#titelText{
+    -fx-font-size: 40;
+}
+
+#nameText{
+    -fx-font-weight: bold;
+}
+
+#buttonLayout{
+    -fx-padding: 40px;
+}
+
+
