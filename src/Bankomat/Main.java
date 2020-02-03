@@ -60,6 +60,7 @@ public class Main extends Application {
         loanHandlingSceneController.start();
 
         ta bort kommentarer när controller för dessa är fixade.
+        fuck
         */
 
         stage.setOnCloseRequest(t -> {
