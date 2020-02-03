@@ -49,10 +49,11 @@ public class Main extends Application {
         NewClientSceneController newClientSceneController = new NewClientSceneController(newClientScene,this, rep, admin);
         newClientSceneController.start();
 
-        /*
-        ClientHandlingSceneController clientHandlingSceneController = new ClientHandlingSceneController(clientHandlingScene,this, db, admin);
+
+        ClientHandlingSceneController clientHandlingSceneController = new ClientHandlingSceneController(clientHandlingScene,this, rep, admin);
         clientHandlingSceneController.start();
 
+        /*
         LoanHandlingSceneController loanHandlingSceneController = new LoanHandlingSceneController(loanHandlingScene,this, db, admin);
         loanHandlingSceneController.start();
 

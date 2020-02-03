@@ -137,11 +137,10 @@ public class Repository {
     }
 
     // Hämtar klient om Personnr stämmer med Pin.
-    public Client getClient(String persNr, int pinCode) {
+    public Client getClient(String persNr) {
         Client client = null;
-        try (CallableStatement stmt = con.prepareCall("CALL bankdatabase.checkCred(?, ?)")) {
+        try (CallableStatement stmt = con.prepareCall("CALL bankdatabase.checkCred(?)")) {
             stmt.setString(1, persNr);
-            stmt.setInt(2, pinCode);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 client = getClientById(rs.getInt("CustomerID"));

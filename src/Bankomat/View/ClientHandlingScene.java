@@ -10,12 +10,10 @@ import javafx.scene.layout.VBox;
 public class ClientHandlingScene {
 
     private VBox designLayout = new VBox();
-    private Label clientHandlingLabel = new Label("Admin hub");
-    private Button newClient = new Button("create new client account"); // lägg till ny kund
-    private Button accountHandling = new Button("handle a clients account"); //skapa nytt konto, avsluta konto, sätt in pengar på konto, ändra räntesats på konto, visa historik för konto
-    private Button clientHandling = new Button("handle a clients info"); // uppdatera kunduppgifter, radera kund
-    private Button loanHandling = new Button("handle a clients loan"); // visa betalplan på lån, ändra betalningsplan för lån
-    private Button logOut = new Button("Log Out");
+    private Label clientHandlingLabel = new Label("Client handling");
+    private Button updateClient = new Button("update clients info");
+    private Button deleteClient = new Button("delete a client");
+    private Button backB = new Button("back");
 
 
     public void setUp() {
@@ -23,10 +21,8 @@ public class ClientHandlingScene {
 
 
         GridPane buttonLayout = new GridPane();
-        buttonLayout.add(newClient,0,0);
-        buttonLayout.add(accountHandling,1,0);
-        buttonLayout.add(clientHandling,0,1);
-        buttonLayout.add(loanHandling,1,1);
+        buttonLayout.add(deleteClient,0,0);
+        buttonLayout.add(updateClient,0,1);
         designLayout.getChildren().add(buttonLayout);
 
         clientHandlingLabel.setPrefSize(300,275);
@@ -35,15 +31,12 @@ public class ClientHandlingScene {
         designLayout.setId("background");
         clientHandlingLabel.setId("titelText");
 
-        newClient.setPadding(new Insets(10));
-        accountHandling.setPadding(new Insets(10));
-        clientHandling.setPadding(new Insets(10));
-        loanHandling.setPadding(new Insets(10));
+        deleteClient.setPadding(new Insets(10));
+        updateClient.setPadding(new Insets(10));
 
-        newClient.setMinSize(100,100);
-        accountHandling.setMinSize(100,100);
-        clientHandling.setMinSize(100,100);
-        loanHandling.setMinSize(100,100);
+        deleteClient.setMinSize(100,100);
+        updateClient.setMinSize(100,100);
+
 
         buttonLayout.setAlignment(Pos.CENTER);
         buttonLayout.setId("buttonLayout");
@@ -58,23 +51,15 @@ public class ClientHandlingScene {
         return clientHandlingLabel;
     }
 
-    public Button getAccountHandling() {
-        return accountHandling;
+    public Button getUpdateClient() {
+        return updateClient;
     }
 
-    public Button getClientHandling() {
-        return clientHandling;
+    public Button getDeleteClient() {
+        return deleteClient;
     }
 
-    public Button getLoanHandling() {
-        return loanHandling;
-    }
-
-    public Button getNewClient() {
-        return newClient;
-    }
-
-    public Button getLogOut() {
-        return logOut;
+    public Button getBackB() {
+        return backB;
     }
 }
