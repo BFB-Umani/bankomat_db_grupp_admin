@@ -5,12 +5,12 @@ import Bankomat.Main;
 import Bankomat.Model.Admin;
 import Bankomat.View.AdminHubScene;
 
+
 public class AdminHubSceneController {
     private AdminHubScene adminHubScene;
     private Repository rep;
     private Main main;
     private Admin admin;
-
 
     public AdminHubSceneController(AdminHubScene adminHubScene, Main main, Repository rep, Admin admin) {
         this.adminHubScene = adminHubScene;

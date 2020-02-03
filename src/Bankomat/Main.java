@@ -3,6 +3,7 @@ package Bankomat;
 import Bankomat.Controller.*;
 import Bankomat.Database.Repository;
 import Bankomat.Model.Admin;
+import Bankomat.Model.Client;
 import Bankomat.View.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -19,6 +20,7 @@ public class Main extends Application {
     private LoanHandlingScene loanHandlingScene;
     private Admin admin = new Admin();
     private Repository rep = new Repository();
+    private Client client;
     public Stage stage = new Stage();
 
     public void start(Stage stage) {
@@ -43,15 +45,15 @@ public class Main extends Application {
         AdminHubSceneController adminHubSceneController = new AdminHubSceneController(adminHubScene,this, rep, admin);
         adminHubSceneController.start();
 
-        AccountHandlingSceneController accountHandlingSceneController = new AccountHandlingSceneController(accountHandlingScene,this, rep, admin);
-        accountHandlingSceneController.start();
-
         NewClientSceneController newClientSceneController = new NewClientSceneController(newClientScene,this, rep, admin);
         newClientSceneController.start();
 
 
         ClientHandlingSceneController clientHandlingSceneController = new ClientHandlingSceneController(clientHandlingScene,this, rep, admin);
         clientHandlingSceneController.start();
+
+        AccountHandlingSceneController accountHandlingSceneController = new AccountHandlingSceneController(accountHandlingScene,this, rep, admin);
+        accountHandlingSceneController.start();
 
         /*
         LoanHandlingSceneController loanHandlingSceneController = new LoanHandlingSceneController(loanHandlingScene,this, db, admin);
@@ -94,5 +96,13 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }
