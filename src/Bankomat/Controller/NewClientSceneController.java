@@ -11,6 +11,7 @@ public class NewClientSceneController {
     private String input1;
     private String input2;
     private String input3;
+    private String input4;
     private NewClientScene newClientScene;
     private Repository rep;
     private Main main;
@@ -34,7 +35,10 @@ public class NewClientSceneController {
             input1 = newClientScene.getFirstNameField().getText();
             input2 = newClientScene.getLastNameField().getText();
             input3 = newClientScene.getPinField().getText();
-            if (!input1.equalsIgnoreCase("") && !input2.equalsIgnoreCase("") && !input3.equalsIgnoreCase("")) {
+            input4 = newClientScene.getPersonalNumberField().getText();
+            if (!input1.equalsIgnoreCase("") && !input2.equalsIgnoreCase("") && !input3.equalsIgnoreCase("")&& !input4.equalsIgnoreCase("")) {
+
+                rep.createCustomer(input1,input2,Integer.parseInt(input3),input4);
 
                 JOptionPane.showMessageDialog(null,"ny kund tillagd i systemet");
                 changeToHubScene();
