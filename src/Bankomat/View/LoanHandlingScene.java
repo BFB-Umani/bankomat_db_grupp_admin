@@ -13,17 +13,19 @@ public class LoanHandlingScene {
     private Label clientHandlingLabel = new Label("Client handling");
     private Button paymentPlan = new Button("show payment Plan");
     private Button changePayment = new Button("update payment plan");
+    private Button changeRent = new Button("update rent for loan");
     private Button backB = new Button("back");
 
 
     public void setUp() {
         designLayout.getChildren().add(clientHandlingLabel);
         designLayout.getChildren().add(backB);
+        designLayout.getChildren().add(paymentPlan);
 
 
         GridPane buttonLayout = new GridPane();
-        buttonLayout.add(changePayment,0,0);
-        buttonLayout.add(paymentPlan,1,0);
+        buttonLayout.add(changeRent,0,0);
+        buttonLayout.add(changePayment,1,0);
         designLayout.getChildren().add(buttonLayout);
 
         clientHandlingLabel.setPrefSize(300,275);
@@ -36,7 +38,7 @@ public class LoanHandlingScene {
         paymentPlan.setPadding(new Insets(10));
 
         changePayment.setMinSize(150,100);
-        paymentPlan.setMinSize(150,100);
+        changeRent.setMinSize(150,100);
 
 
         buttonLayout.setAlignment(Pos.CENTER);
@@ -60,6 +62,10 @@ public class LoanHandlingScene {
 
     public Button getChangePayment() {
         return changePayment;
+    }
+
+    public Button getChangeRent() {
+        return changeRent;
     }
 
     public Button getBackB() {

@@ -55,13 +55,8 @@ public class Main extends Application {
         AccountHandlingSceneController accountHandlingSceneController = new AccountHandlingSceneController(accountHandlingScene,this, rep, admin);
         accountHandlingSceneController.start();
 
-        /*
-        LoanHandlingSceneController loanHandlingSceneController = new LoanHandlingSceneController(loanHandlingScene,this, db, admin);
+        LoanHandlingSceneController loanHandlingSceneController = new LoanHandlingSceneController(loanHandlingScene,this, rep, admin);
         loanHandlingSceneController.start();
-
-        ta bort kommentarer när controller för dessa är fixade.
-        fuck
-        */
 
         stage.setOnCloseRequest(t -> {
             stage.close();

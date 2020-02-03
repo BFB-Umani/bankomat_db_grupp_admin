@@ -55,7 +55,7 @@ public class Repository {
             while (rs.next()) {
                 Admin admin = getAdminById(rs.getInt("admin"));
                 Loan loan = new Loan(rs.getInt("LoanID"), rs.getInt("startAmount"), rs.getInt("paidAmount"),
-                        rs.getDouble("interestRate"), rs.getDate("paymentPlan"), admin);
+                        rs.getDouble("interestRate"), rs.getString("paymentPlan"));
                 loanList.add(loan);
 
             }
@@ -189,6 +189,26 @@ public class Repository {
         }
     }
 
+    public Loan getPaymentPlan() {
+        Loan loan = null;
+        try(PreparedStatement stmt = con.prepareCall("SELECT * from Loan")) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int loanID = rs.getInt("LoanID");
+                int startAmount = rs.getInt("startAmount");
+                int paidAmount = rs.getInt("paidAmount");
+                double interestRate = rs.getDouble("interestRate");
+                String paymentPlan = rs.getString("paymentPlan");
+                loan = new Loan(loanID, startAmount, paidAmount, interestRate, paymentPlan);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return loan;
+    }
+
     //    Raderar en kund
     public void deleteCustomer(String personalNumber) {
         try (CallableStatement stmt = con.prepareCall("CALL deleteCustomer(?);")) {
@@ -218,10 +238,10 @@ public class Repository {
     }
 
     //    Ändrar betalplan på lån
-    public void changePaymentPlanForLoan(int loanID, Date newDate) {
+    public void changePaymentPlanForLoan(int loanID, String newDate) {
         try (CallableStatement stmt = con.prepareCall("CALL changePaymentPlanForLoan(?, ?);")) {
             stmt.setInt(1, loanID);
-            stmt.setDate(2, newDate);
+            stmt.setString(2, newDate);
             stmt.execute();
 
         } catch (SQLException e) {

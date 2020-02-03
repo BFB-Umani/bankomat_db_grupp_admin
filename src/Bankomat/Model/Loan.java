@@ -9,16 +9,14 @@ public class Loan {
     private int startAmount;
     private int paidAmount;
     private double interestRate;
-    private Date paymentPlan;
-    private Admin admin;
+    private String paymentPlan;
 
-    public Loan(int id, int startAmount, int paidAmount, double interestRate, Date paymentPlan, Admin admin) {
+    public Loan(int id, int startAmount, int paidAmount, double interestRate, String paymentPlan) {
         this.id = id;
         this.startAmount = startAmount;
         this.paidAmount = paidAmount;
         this.interestRate = interestRate;
         this.paymentPlan = paymentPlan;
-        this.admin = admin;
     }
 
     public int getId() {
@@ -37,11 +35,7 @@ public class Loan {
         return interestRate;
     }
 
-    public Date getPaymentPlan() {
+    public String getPaymentPlan() {
         return paymentPlan;
-    }
-
-    public Admin getAdmin() {
-        return admin;
     }
 }
