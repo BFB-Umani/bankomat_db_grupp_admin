@@ -172,6 +172,7 @@ public class Repository {
         return client;
     }
 
+//    Skapar en kund
     public void createCustomer(String firstname, String lastname, int pinCode, String personalNumber) {
         try (CallableStatement stmt = con.prepareCall("CALL createCustomer(?, ?, ?, ?);")){
             stmt.setString(1, firstname);
@@ -186,5 +187,46 @@ public class Repository {
             e.printStackTrace();
         }
     }
-    
+
+//    Raderar en kund
+    public void deleteCustomer(String personalNumber){
+        try (CallableStatement stmt = con.prepareCall("CALL deleteCustomer(?);")){
+            stmt.setString(1, personalNumber);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+// NEDAN BEHÖVS ÄNDRAS TILL DOUBLE I BÅDE JAVA OCH MySQL
+//    Ändrar ränta för lån
+    public void changeRateForLoan(int loanID, int newRate){
+        try (CallableStatement stmt = con.prepareCall("CALL changeRateForLoan(?, ?);")){
+            stmt.setInt(1, loanID);
+            stmt.setInt(2, newRate);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+//    Ändrar betalplan på lån
+    public void changePaymentPlanForLoan(int loanID, Date newDate){
+        try (CallableStatement stmt = con.prepareCall("CALL changePaymentPlanForLoan(?, ?);")){
+            stmt.setInt(1, loanID);
+            stmt.setDate(2, newDate);
+            stmt.execute();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }
