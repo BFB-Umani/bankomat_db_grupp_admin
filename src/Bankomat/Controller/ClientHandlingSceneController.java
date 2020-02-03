@@ -123,8 +123,12 @@ public class ClientHandlingSceneController {
         ok.setCursor(Cursor.HAND);
 
         ok.setOnAction(actionEvent -> {
-            customerId = rep.getClient(prsNrField.getText()).getID();
-            pin = Integer.parseInt(pinField.getText());
+            try {
+                customerId = rep.getClient(prsNrField.getText()).getID();
+                pin = Integer.parseInt(pinField.getText());
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
             rep.updateCustomer(customerId,pin);
             dialogStage.close();
         });

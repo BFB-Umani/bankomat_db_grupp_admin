@@ -3,11 +3,14 @@ package Bankomat.Controller;
 import Bankomat.Database.Repository;
 import Bankomat.Model.Admin;
 import Bankomat.Main;
+import Bankomat.Model.Client;
 import Bankomat.View.AdminLoginScene;
 
+import javax.swing.*;
+
 public class AdminLoginSceneController {
-    private String input1;
-    private String input2;
+    private String personNr;
+    private String password;
     private AdminLoginScene adminLoginScene;
     private Repository rep;
     private Main main;
@@ -25,12 +28,21 @@ public class AdminLoginSceneController {
         adminLoginScene.setUp();
 
         adminLoginScene.getLoginButton().setOnAction(actionEvent -> {
-            input1 = adminLoginScene.getNameField().getText();
-            input2 = adminLoginScene.getPasswdField().getText();
+            personNr = adminLoginScene.getNameField().getText();
+            password = adminLoginScene.getPasswdField().getText();
 
-            // kod för inlogg.
+            try {
+                personNr = adminLoginScene.getNameField().getText();
+                password = adminLoginScene.getPasswdField().getText();
+                Admin admin = rep.getAdmin(personNr, password);
+                if(admin != null) {
+                    changeToAdminHub();
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "PersonNr + PIN (HELTAL)"); // ändra
+            }
 
-            changeToAdminHub();
+
 
         });
 

@@ -18,6 +18,7 @@ public class ClientHandlingScene {
 
     public void setUp() {
         designLayout.getChildren().add(clientHandlingLabel);
+        designLayout.getChildren().add(backB);
 
 
         GridPane buttonLayout = new GridPane();

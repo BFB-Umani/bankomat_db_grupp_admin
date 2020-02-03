@@ -76,7 +76,7 @@ public class Repository {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 admin = new Admin(rs.getInt("AdministratorID"), rs.getString("firstname"),
-                        rs.getString("lastname"), rs.getString("personalNumber"));
+                        rs.getString("lastname"), rs.getString("personalNumber"), rs.getString("onlinepassword"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

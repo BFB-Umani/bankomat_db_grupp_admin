@@ -10,42 +10,38 @@ import javafx.scene.layout.VBox;
 public class LoanHandlingScene {
 
     private VBox designLayout = new VBox();
-    private Label LoanHandlingLabel = new Label("Admin hub");
-    private Button newClient = new Button("create new client account"); // lägg till ny kund
-    private Button accountHandling = new Button("handle a clients account"); //skapa nytt konto, avsluta konto, sätt in pengar på konto, ändra räntesats på konto, visa historik för konto
-    private Button clientHandling = new Button("handle a clients info"); // uppdatera kunduppgifter, radera kund
-    private Button loanHandling = new Button("handle a clients loan"); // visa betalplan på lån, ändra betalningsplan för lån
-    private Button logOut = new Button("Log Out");
+    private Label clientHandlingLabel = new Label("Client handling");
+    private Button paymentPlan = new Button("show payment Plan");
+    private Button changePayment = new Button("update payment plan");
+    private Button backB = new Button("back");
 
 
     public void setUp() {
-        designLayout.getChildren().add(LoanHandlingLabel);
+        designLayout.getChildren().add(clientHandlingLabel);
+        designLayout.getChildren().add(backB);
 
 
         GridPane buttonLayout = new GridPane();
-        buttonLayout.add(newClient,0,0);
-        buttonLayout.add(accountHandling,1,0);
-        buttonLayout.add(clientHandling,0,1);
-        buttonLayout.add(loanHandling,1,1);
+        buttonLayout.add(changePayment,0,0);
+        buttonLayout.add(paymentPlan,1,0);
         designLayout.getChildren().add(buttonLayout);
 
-        LoanHandlingLabel.setPrefSize(300,275);
-        LoanHandlingLabel.setMaxWidth(Double.MAX_VALUE);
-        LoanHandlingLabel.setAlignment(Pos.CENTER);
+        clientHandlingLabel.setPrefSize(300,275);
+        clientHandlingLabel.setMaxWidth(Double.MAX_VALUE);
+        clientHandlingLabel.setAlignment(Pos.CENTER);
         designLayout.setId("background");
-        LoanHandlingLabel.setId("titelText");
+        clientHandlingLabel.setId("titelText");
 
-        newClient.setPadding(new Insets(10));
-        accountHandling.setPadding(new Insets(10));
-        clientHandling.setPadding(new Insets(10));
-        loanHandling.setPadding(new Insets(10));
+        changePayment.setPadding(new Insets(10));
+        paymentPlan.setPadding(new Insets(10));
 
-        newClient.setMinSize(100,100);
-        accountHandling.setMinSize(100,100);
-        clientHandling.setMinSize(100,100);
-        loanHandling.setMinSize(100,100);
+        changePayment.setMinSize(150,100);
+        paymentPlan.setMinSize(150,100);
+
 
         buttonLayout.setAlignment(Pos.CENTER);
+        buttonLayout.setVgap(10);
+        buttonLayout.setHgap(10);
         buttonLayout.setId("buttonLayout");
     }
 
@@ -54,27 +50,19 @@ public class LoanHandlingScene {
         return designLayout;
     }
 
-    public Label getLoanHandlingLabel() {
-        return LoanHandlingLabel;
+    public Label getClientHandlingLabel() {
+        return clientHandlingLabel;
     }
 
-    public Button getAccountHandling() {
-        return accountHandling;
+    public Button getPaymentPlan() {
+        return paymentPlan;
     }
 
-    public Button getClientHandling() {
-        return clientHandling;
+    public Button getChangePayment() {
+        return changePayment;
     }
 
-    public Button getLoanHandling() {
-        return loanHandling;
-    }
-
-    public Button getNewClient() {
-        return newClient;
-    }
-
-    public Button getLogOut() {
-        return logOut;
+    public Button getBackB() {
+        return backB;
     }
 }
