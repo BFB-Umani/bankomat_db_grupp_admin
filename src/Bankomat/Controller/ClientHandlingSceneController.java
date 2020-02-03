@@ -4,6 +4,16 @@ import Bankomat.Database.Repository;
 import Bankomat.Main;
 import Bankomat.Model.Admin;
 import Bankomat.View.ClientHandlingScene;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class ClientHandlingSceneController {
 
@@ -11,6 +21,10 @@ public class ClientHandlingSceneController {
     private Repository rep;
     private Main main;
     private Admin admin;
+    private Label orderLabel = new Label("skriv in personNummer för kund");
+    private TextField prsNrField = new TextField();
+    private Button ok = new Button("ok");
+    private String prsNr;
 
 
     public ClientHandlingSceneController(ClientHandlingScene clientHandlingScene, Main main, Repository rep, Admin admin) {
@@ -32,11 +46,47 @@ public class ClientHandlingSceneController {
         });
 
         clientHandlingScene.getDeleteClient().setOnAction(actionEvent -> {
+            deleteAccountBox();
 
         });
     }
 
     public void changeToAdminHub() {
         main.goToAdminHubScene();
+    }
+
+    public void deleteAccountBox() {
+
+        Stage dialogStage = new Stage();
+        VBox layout = new VBox();
+        HBox hBox = new HBox(orderLabel);
+        HBox prNrArea = new HBox(prsNrField);
+        HBox buttons = new HBox(ok);
+        layout.getChildren().add(hBox);
+        layout.getChildren().add(prNrArea);
+        layout.getChildren().add(buttons);
+        layout.setMinSize(400,50);
+        buttons.setAlignment(Pos.BOTTOM_CENTER);
+        buttons.setMinSize(300,60);
+        orderLabel.setAlignment(Pos.CENTER);
+        hBox.setAlignment(Pos.CENTER);
+        prNrArea.setAlignment(Pos.CENTER);
+        prNrArea.setPadding(new Insets(15));
+        ok.setPrefSize(88,45);
+        buttons.setPadding(new Insets(15, 0, 10, 0));
+        ok.setCursor(Cursor.HAND);
+
+        ok.setOnAction(actionEvent -> {
+            prsNr = prsNrField.getText();
+            rep.deleteCustomer(prsNr);
+            dialogStage.close();
+        });
+
+        dialogStage.setResizable(false);
+        dialogStage.setScene(new Scene(layout));
+        dialogStage.show();
+        dialogStage.setOnCloseRequest(t -> {
+            dialogStage.close();
+        });
     }
 }

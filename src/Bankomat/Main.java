@@ -23,7 +23,7 @@ public class Main extends Application {
 
     public void start(Stage stage) {
         this.stage = stage;
-        stage.setTitle("Shoe Shop");
+        stage.setTitle("Sookyung bank");
         stage.setResizable(false);
         adminLoginScene = new AdminLoginScene();
         adminHubScene = new AdminHubScene();

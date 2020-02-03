@@ -22,7 +22,7 @@ public class ClientHandlingScene {
 
         GridPane buttonLayout = new GridPane();
         buttonLayout.add(deleteClient,0,0);
-        buttonLayout.add(updateClient,0,1);
+        buttonLayout.add(updateClient,1,0);
         designLayout.getChildren().add(buttonLayout);
 
         clientHandlingLabel.setPrefSize(300,275);
@@ -34,11 +34,13 @@ public class ClientHandlingScene {
         deleteClient.setPadding(new Insets(10));
         updateClient.setPadding(new Insets(10));
 
-        deleteClient.setMinSize(100,100);
-        updateClient.setMinSize(100,100);
+        deleteClient.setMinSize(150,100);
+        updateClient.setMinSize(150,100);
 
 
         buttonLayout.setAlignment(Pos.CENTER);
+        buttonLayout.setVgap(10);
+        buttonLayout.setHgap(10);
         buttonLayout.setId("buttonLayout");
     }
 
