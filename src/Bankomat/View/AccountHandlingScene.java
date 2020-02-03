@@ -11,7 +11,7 @@ public class AccountHandlingScene {
     private VBox designLayout = new VBox();
     private Label accountHandlingLabel = new Label("Account Handling");
     private Button newAccount = new Button("create new \naccount"); // lägg till nytt konto
-    private Button closeAccount = new Button("handle client info"); // avsluta konto
+    private Button closeAccount = new Button("Close account"); // avsluta konto
     private Button addFundsToAccount = new Button("add funds to client account"); // lägg till pengar på kund-konto
     private Button changeRate = new Button("change rate"); // ändra ränta på konto
     private Button accountHistory = new Button("History"); // visa konto-historik

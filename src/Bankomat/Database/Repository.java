@@ -257,10 +257,33 @@ public class Repository {
     }
 
     //    ändrar ränta för konto
-    public void changeRateForAccount(int loanID, double newRate) {
+    public void changeRateForAccount(int accountID, double newRate) {
         try (CallableStatement stmt = con.prepareCall("CALL changerateForAccount(?, ?);")) {
-            stmt.setInt(1, loanID);
+            stmt.setInt(1, accountID);
             stmt.setDouble(2, newRate);
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createAccount(int customerID) {
+        try (CallableStatement stmt = con.prepareCall("CALL createAccount(?);")) {
+            stmt.setInt(1, customerID);
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void depositIntoAccount(int accountID, int amount) {
+        try (CallableStatement stmt = con.prepareCall("CALL DepositIntoAccount(?, ?);")) {
+            stmt.setInt(1, accountID);
+            stmt.setInt(2, amount);
             stmt.execute();
         } catch (SQLException e) {
             e.printStackTrace();
