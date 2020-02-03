@@ -139,11 +139,17 @@ public class Repository {
     // Hämtar klient om Personnr stämmer med Pin.
     public Client getClient(String persNr) {
         Client client = null;
-        try (CallableStatement stmt = con.prepareCall("CALL bankdatabase.checkCred(?)")) {
-            stmt.setString(1, persNr);
+        try (CallableStatement stmt = con.prepareCall("SELECT * from customer where personalNumber = " + persNr)) {
+
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                client = getClientById(rs.getInt("CustomerID"));
+                int customerID = rs.getInt("customerID");
+                String firstname = rs.getString("firstname");
+                String lastname = rs.getString("lastname");
+                int pinCode = rs.getInt("pinCode");
+                String personalNumber = rs.getString("personalNumber");
+
+                client = new Client(customerID, firstname, lastname, pinCode, personalNumber);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -151,25 +157,6 @@ public class Repository {
         return client;
     }
 
-    // Hämtar all klient info med klient id
-    public Client getClientById(int custId) {
-        Client client = null;
-
-        String query = "SELECT * from bankdatabase.customer where CustomerID = ?";
-
-        try (PreparedStatement stmt = con.prepareStatement(query)) {
-
-            stmt.setInt(1, custId);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                client = new Client(rs.getInt("CustomerID"), rs.getString("firstname")
-                        , rs.getString("lastname"), rs.getString("personalNumber"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return client;
-    }
 
     //    Skapar en kund
     public void createCustomer(String firstname, String lastname, int pinCode, String personalNumber) {
@@ -229,7 +216,7 @@ public class Repository {
         }
     }
 
-//    Uppdaterar kunds pinkod
+    //    Uppdaterar kunds pinkod
     public void updateCustomer(int customerID, int newpinCode) {
         try (CallableStatement stmt = con.prepareCall("CALL updateCustomer(?, ?);")) {
             stmt.setInt(1, customerID);
@@ -242,8 +229,8 @@ public class Repository {
         }
     }
 
-//    raderar konto
-    public void deleteAccount (int accountID){
+    //    raderar konto
+    public void deleteAccount(int accountID) {
         try (CallableStatement stmt = con.prepareCall("CALL deleteAccount(?);")) {
             stmt.setInt(1, accountID);
             stmt.execute();
@@ -254,8 +241,8 @@ public class Repository {
         }
     }
 
-//    ändrar ränta för konto
-    public void changeRateForAccount(int loanID, double newRate){
+    //    ändrar ränta för konto
+    public void changeRateForAccount(int loanID, double newRate) {
         try (CallableStatement stmt = con.prepareCall("CALL changerateForAccount(?, ?);")) {
             stmt.setInt(1, loanID);
             stmt.setDouble(2, newRate);
