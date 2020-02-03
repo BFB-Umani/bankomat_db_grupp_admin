@@ -256,21 +256,9 @@ public class Repository {
     }
 
 
-    public Admin getAdmin(String personalnumber, int pinCode) {
-        Admin admin = null;
-        try (CallableStatement stmt = con.prepareCall("CALL bankdatabase.(?, ?)")) {
-            stmt.setString(1, personalnumber);
-            stmt.setInt(2, pinCode);
-            ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                admin = getAdminById(rs.getInt("administratorid"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return admin;
 
-    }
+
+    
 //    ändrar ränta för konto
         public void changeRateForAccount(int loanID, double newRate){
             try (CallableStatement stmt = con.prepareCall("CALL changerateForAccount(?, ?);")) {
