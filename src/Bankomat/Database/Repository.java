@@ -157,6 +157,21 @@ public class Repository {
         return client;
     }
 
+    public Admin getAdmin(String personalNumber, String onlinepassword) {
+        Admin admin= null;
+        try (CallableStatement stmt = con.prepareCall("CALL bankdatabase.getadmin(?,?)")) {
+            stmt.setString(1, personalNumber);
+            stmt.setString(2, onlinepassword);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                admin = getAdminById(rs.getInt("AdministratorId"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return admin;
+    }
+
 
     //    Skapar en kund
     public void createCustomer(String firstname, String lastname, int pinCode, String personalNumber) {
