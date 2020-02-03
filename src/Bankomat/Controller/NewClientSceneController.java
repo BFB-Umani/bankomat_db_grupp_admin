@@ -52,6 +52,6 @@ public class NewClientSceneController {
     }
 
     public void changeToHubScene() {
-        main.goToAdminHubScene();
+        main.goToAdminHubScene(admin);
     }
 }

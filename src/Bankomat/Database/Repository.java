@@ -137,18 +137,19 @@ public class Repository {
     }
 
     // Hämtar klient om Personnr stämmer med Pin.
-    public Client getClient(String persNr) {
-        Client client = null;
-        try (CallableStatement stmt = con.prepareCall("CALL bankdatabase.checkCred(?)")) {
-            stmt.setString(1, persNr);
+    public Admin getAdmin(String personalNumber, String onlinepassword) {
+        Admin admin= null;
+        try (CallableStatement stmt = con.prepareCall("CALL bankdatabase.getadmin(?,?)")) {
+            stmt.setString(1, personalNumber);
+            stmt.setString(2, onlinepassword);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
-                client = getClientById(rs.getInt("CustomerID"));
+                admin = getAdminById(rs.getInt("AdministratorId"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return client;
+        return admin;
     }
 
     // Hämtar all klient info med klient id
@@ -229,7 +230,7 @@ public class Repository {
         }
     }
 
-//    Uppdaterar kunds pinkod
+    //    Uppdaterar kunds pinkod
     public void updateCustomer(int customerID, int newpinCode) {
         try (CallableStatement stmt = con.prepareCall("CALL updateCustomer(?, ?);")) {
             stmt.setInt(1, customerID);
@@ -242,8 +243,8 @@ public class Repository {
         }
     }
 
-//    raderar konto
-    public void deleteAccount (int accountID){
+    //    raderar konto
+    public void deleteAccount(int accountID) {
         try (CallableStatement stmt = con.prepareCall("CALL deleteAccount(?);")) {
             stmt.setInt(1, accountID);
             stmt.execute();
@@ -254,18 +255,35 @@ public class Repository {
         }
     }
 
-//    ändrar ränta för konto
-    public void changeRateForAccount(int loanID, double newRate){
-        try (CallableStatement stmt = con.prepareCall("CALL changerateForAccount(?, ?);")) {
-            stmt.setInt(1, loanID);
-            stmt.setDouble(2, newRate);
-            stmt.execute();
+
+    public Admin getAdmin(String personalnumber, int pinCode) {
+        Admin admin = null;
+        try (CallableStatement stmt = con.prepareCall("CALL bankdatabase.(?, ?)")) {
+            stmt.setString(1, personalnumber);
+            stmt.setInt(2, pinCode);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                admin = getAdminById(rs.getInt("administratorid"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
+        return admin;
+
+    }
+//    ändrar ränta för konto
+        public void changeRateForAccount(int loanID, double newRate){
+            try (CallableStatement stmt = con.prepareCall("CALL changerateForAccount(?, ?);")) {
+                stmt.setInt(1, loanID);
+                stmt.setDouble(2, newRate);
+                stmt.execute();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
-}
 

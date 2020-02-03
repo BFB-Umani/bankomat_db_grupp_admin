@@ -72,7 +72,7 @@ public class Main extends Application {
         scene.setRoot(adminLoginScene.getDesignLayout());
     }
 
-    public void goToAdminHubScene() {
+    public void goToAdminHubScene(Admin admin) {
         scene.setRoot(adminHubScene.getDesignLayout());
     }
 

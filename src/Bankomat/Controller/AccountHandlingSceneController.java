@@ -49,6 +49,6 @@ public class AccountHandlingSceneController {
     }
 
     public void changeToAdminHub() {
-        main.goToAdminHubScene();
+        main.goToAdminHubScene(admin);
     }
 }
