@@ -24,13 +24,13 @@ public class Repository {
                 " WHERE accountHistory.histDate > DATE_SUB(NOW(), INTERVAL 1 MONTH) AND a.CustomerID = ?" +
                 " AND a.accountId = ?;";
 
-        try(PreparedStatement stmt = con.prepareStatement(query)) {
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setInt(1, custId);
             stmt.setInt(2, accId);
             ResultSet rs = stmt.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 Account account = (getAccountById(rs.getInt("accountId")));
-                accountHistory = new AccountHistory(rs.getInt("historyId"), account ,rs.getInt("balanceBefore"),
+                accountHistory = new AccountHistory(rs.getInt("historyId"), account, rs.getInt("balanceBefore"),
                         rs.getInt("withdraw"), rs.getInt("balanceAfter"), rs.getDate("histDate"));
                 accountHistoryList.add(accountHistory);
             }
@@ -48,11 +48,11 @@ public class Repository {
                 "    inner join loan l on loantocustomer.LoanID = l.LoanID" +
                 "    where CustomerID = ?;";
 
-        try(PreparedStatement stmt = con.prepareCall(query)) {
+        try (PreparedStatement stmt = con.prepareCall(query)) {
             stmt.setInt(1, custId);
             ResultSet rs = stmt.executeQuery();
 
-            while(rs.next()) {
+            while (rs.next()) {
                 Admin admin = getAdminById(rs.getInt("admin"));
                 Loan loan = new Loan(rs.getInt("LoanID"), rs.getInt("startAmount"), rs.getInt("paidAmount"),
                         rs.getDouble("interestRate"), rs.getDate("paymentPlan"), admin);
@@ -71,10 +71,10 @@ public class Repository {
 
         String query = "SELECT * from administrator where AdministratorID = ? ;";
 
-        try(PreparedStatement stmt = con.prepareCall(query)){
+        try (PreparedStatement stmt = con.prepareCall(query)) {
             stmt.setInt(1, adminId);
             ResultSet rs = stmt.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 admin = new Admin(rs.getInt("AdministratorID"), rs.getString("firstname"),
                         rs.getString("lastname"), rs.getString("personalNumber"));
             }
@@ -88,31 +88,29 @@ public class Repository {
     public boolean withdrawMoney(int accId, int amount) {
         String query = "CALL WithdrawFromAccount(?, ?)";
 
-        try(CallableStatement stmt = con.prepareCall(query)) {
+        try (CallableStatement stmt = con.prepareCall(query)) {
             stmt.setInt(1, accId);
             stmt.setInt(2, amount);
             stmt.execute();
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return true;
     }
 
     // Lägger in konton i en lista. Tar ut accountId skickar till "getAccountById()" som returnerar Account.
-    public List<Account> getAccounts (int custId) {
+    public List<Account> getAccounts(int custId) {
         List<Account> accountList = new ArrayList<>();
 
-        try(CallableStatement stmt = con.prepareCall("CALL bankdatabase.accountState(?)")) {
+        try (CallableStatement stmt = con.prepareCall("CALL bankdatabase.accountState(?)")) {
             stmt.setInt(1, custId);
             ResultSet rs = stmt.executeQuery();
-            while(rs.next()) {
+            while (rs.next()) {
                 accountList.add(getAccountById(rs.getInt("AccountId")));
             }
 
 
-        }
-        catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -125,16 +123,14 @@ public class Repository {
 
         String query = "SELECT AccountID, balance from bankdatabase.accounts where AccountId = ?";
 
-        try(PreparedStatement stmt = con.prepareStatement(query)) {
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
 
             stmt.setInt(1, accId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 account = new Account(rs.getInt("AccountID"), rs.getInt("balance"));
             }
-        }
-
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return account;
@@ -143,15 +139,14 @@ public class Repository {
     // Hämtar klient om Personnr stämmer med Pin.
     public Client getClient(String persNr, int pinCode) {
         Client client = null;
-        try(CallableStatement stmt = con.prepareCall("CALL bankdatabase.checkCred(?, ?)")) {
+        try (CallableStatement stmt = con.prepareCall("CALL bankdatabase.checkCred(?, ?)")) {
             stmt.setString(1, persNr);
             stmt.setInt(2, pinCode);
             ResultSet rs = stmt.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 client = getClientById(rs.getInt("CustomerID"));
             }
-        }
-        catch(SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return client;
@@ -163,21 +158,33 @@ public class Repository {
 
         String query = "SELECT * from bankdatabase.customer where CustomerID = ?";
 
-        try(PreparedStatement stmt = con.prepareStatement(query)) {
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
 
             stmt.setInt(1, custId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 client = new Client(rs.getInt("CustomerID"), rs.getString("firstname")
-                ,rs.getString("lastname"), rs.getString("personalNumber"));
+                        , rs.getString("lastname"), rs.getString("personalNumber"));
             }
-        }
-
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return client;
     }
 
+    public void createCustomer(String firstname, String lastname, int pinCode, String personalNumber) {
+        try (CallableStatement stmt = con.prepareCall("CALL createCustomer(?, ?, ?, ?);")){
+            stmt.setString(1, firstname);
+            stmt.setString(2, lastname);
+            stmt.setInt(3, pinCode);
+            stmt.setString(4, personalNumber);
+            stmt.execute();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    
 }
