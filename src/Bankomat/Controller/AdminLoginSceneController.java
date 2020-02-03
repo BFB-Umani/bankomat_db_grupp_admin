@@ -27,7 +27,7 @@ public class AdminLoginSceneController {
         adminLoginScene.setUp();
 
         adminLoginScene.getLoginButton().setOnAction(actionEvent -> {
-          //  try {
+           try {
                 personalnumber = adminLoginScene.getNameField().getText();
                 pin = (adminLoginScene.getPasswdField().getText());
 
@@ -35,11 +35,11 @@ public class AdminLoginSceneController {
                 if (admin != null) {
                     main.goToAdminHubScene(admin);
                 }
-           // }
+            }
 
-/*            catch (NumberFormatException e) {
+        catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "PersonNr + PIN (HELTAL)"); // ändra
-            }*/
+            }
         });
 
     }
