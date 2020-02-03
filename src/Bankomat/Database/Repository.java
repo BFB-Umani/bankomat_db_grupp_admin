@@ -1,9 +1,6 @@
 package Bankomat.Database;
 
-import Bankomat.Model.Account;
-import Bankomat.Model.AccountHistory;
-import Bankomat.Model.Admin;
-import Bankomat.Model.Client;
+import Bankomat.Model.*;
 
 import java.sql.*;
 import java.util.ArrayList;

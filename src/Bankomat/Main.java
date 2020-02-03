@@ -46,6 +46,9 @@ public class Main extends Application {
         AccountHandlingSceneController accountHandlingSceneController = new AccountHandlingSceneController(accountHandlingScene,this, rep, admin);
         accountHandlingSceneController.start();
 
+        NewClientSceneController newClientSceneController = new NewClientSceneController(newClientScene,this, rep, admin);
+        newClientSceneController.start();
+
         /*
         ClientHandlingSceneController clientHandlingSceneController = new ClientHandlingSceneController(clientHandlingScene,this, db, admin);
         clientHandlingSceneController.start();

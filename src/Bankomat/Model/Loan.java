@@ -1,4 +1,4 @@
-package Bankomat.Database;
+package Bankomat.Model;
 
 import Bankomat.Model.Admin;
 
