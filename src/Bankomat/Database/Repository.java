@@ -171,9 +171,9 @@ public class Repository {
         return client;
     }
 
-//    Skapar en kund
+    //    Skapar en kund
     public void createCustomer(String firstname, String lastname, int pinCode, String personalNumber) {
-        try (CallableStatement stmt = con.prepareCall("CALL createCustomer(?, ?, ?, ?);")){
+        try (CallableStatement stmt = con.prepareCall("CALL createCustomer(?, ?, ?, ?);")) {
             stmt.setString(1, firstname);
             stmt.setString(2, lastname);
             stmt.setInt(3, pinCode);
@@ -182,50 +182,90 @@ public class Repository {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-//    Raderar en kund
-    public void deleteCustomer(String personalNumber){
-        try (CallableStatement stmt = con.prepareCall("CALL deleteCustomer(?);")){
+    //    Raderar en kund
+    public void deleteCustomer(String personalNumber) {
+        try (CallableStatement stmt = con.prepareCall("CALL deleteCustomer(?);")) {
             stmt.setString(1, personalNumber);
             stmt.execute();
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-// NEDAN BEHÖVS ÄNDRAS TILL DOUBLE I BÅDE JAVA OCH MySQL
+    // NEDAN BEHÖVS ÄNDRAS TILL DOUBLE I BÅDE JAVA OCH MySQL
 //    Ändrar ränta för lån
-    public void changeRateForLoan(int loanID, int newRate){
-        try (CallableStatement stmt = con.prepareCall("CALL changeRateForLoan(?, ?);")){
+    public void changeRateForLoan(int loanID, double newRate) {
+        try (CallableStatement stmt = con.prepareCall("CALL changeRateForLoan(?, ?);")) {
             stmt.setInt(1, loanID);
-            stmt.setInt(2, newRate);
+            stmt.setDouble(2, newRate);
             stmt.execute();
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-//    Ändrar betalplan på lån
-    public void changePaymentPlanForLoan(int loanID, Date newDate){
-        try (CallableStatement stmt = con.prepareCall("CALL changePaymentPlanForLoan(?, ?);")){
+    //    Ändrar betalplan på lån
+    public void changePaymentPlanForLoan(int loanID, Date newDate) {
+        try (CallableStatement stmt = con.prepareCall("CALL changePaymentPlanForLoan(?, ?);")) {
             stmt.setInt(1, loanID);
             stmt.setDate(2, newDate);
             stmt.execute();
 
         } catch (SQLException e) {
             e.printStackTrace();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+//    Uppdaterar kunds pinkod
+    public void updateCustomer(int customerID, int newpinCode) {
+        try (CallableStatement stmt = con.prepareCall("CALL updateCustomer(?, ?);")) {
+            stmt.setInt(1, customerID);
+            stmt.setInt(2, newpinCode);
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+//    raderar konto
+    public void deleteAccount (int accountID){
+        try (CallableStatement stmt = con.prepareCall("CALL deleteAccount(?);")) {
+            stmt.setInt(1, accountID);
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+//    ändrar ränta för konto
+    public void changeRateForAccount(int loanID, double newRate){
+        try (CallableStatement stmt = con.prepareCall("CALL changerateForAccount(?, ?);")) {
+            stmt.setInt(1, loanID);
+            stmt.setDouble(2, newRate);
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
+
