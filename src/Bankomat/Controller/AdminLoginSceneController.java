@@ -1,23 +1,23 @@
-package bankomat.Controller;
+package Bankomat.Controller;
 
-import bankomat.Model.Admin;
-import bankomat.Model.Database;
-import bankomat.Main;
-import bankomat.View.AdminLoginScene;
+import Bankomat.Database.Repository;
+import Bankomat.Model.Admin;
+import Bankomat.Main;
+import Bankomat.View.AdminLoginScene;
 
 public class AdminLoginSceneController {
     private String input1;
     private String input2;
     private AdminLoginScene adminLoginScene;
-    private Database database;
+    private Repository rep;
     private Main main;
     private Admin admin;
 
 
-    public AdminLoginSceneController(AdminLoginScene adminLoginScene, Main main, Database database, Admin admin) {
+    public AdminLoginSceneController(AdminLoginScene adminLoginScene, Main main, Repository rep, Admin admin) {
         this.adminLoginScene = adminLoginScene;
         this.main = main;
-        this.database = database;
+        this.rep = rep;
         this.admin = admin;
     }
 

@@ -1,4 +1,4 @@
-package bankomat.View;
+package Bankomat.View;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;

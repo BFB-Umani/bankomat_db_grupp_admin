@@ -1,4 +1,4 @@
-package bankomat.View;
+package Bankomat.View;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -7,10 +7,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-public class ClientHandlingScene {
+public class LoanHandlingScene {
 
     private VBox designLayout = new VBox();
-    private Label clientHandlingLabel = new Label("Admin hub");
+    private Label LoanHandlingLabel = new Label("Admin hub");
     private Button newClient = new Button("create new client account"); // lägg till ny kund
     private Button accountHandling = new Button("handle a clients account"); //skapa nytt konto, avsluta konto, sätt in pengar på konto, ändra räntesats på konto, visa historik för konto
     private Button clientHandling = new Button("handle a clients info"); // uppdatera kunduppgifter, radera kund
@@ -19,7 +19,7 @@ public class ClientHandlingScene {
 
 
     public void setUp() {
-        designLayout.getChildren().add(clientHandlingLabel);
+        designLayout.getChildren().add(LoanHandlingLabel);
 
 
         GridPane buttonLayout = new GridPane();
@@ -29,11 +29,11 @@ public class ClientHandlingScene {
         buttonLayout.add(loanHandling,1,1);
         designLayout.getChildren().add(buttonLayout);
 
-        clientHandlingLabel.setPrefSize(300,275);
-        clientHandlingLabel.setMaxWidth(Double.MAX_VALUE);
-        clientHandlingLabel.setAlignment(Pos.CENTER);
+        LoanHandlingLabel.setPrefSize(300,275);
+        LoanHandlingLabel.setMaxWidth(Double.MAX_VALUE);
+        LoanHandlingLabel.setAlignment(Pos.CENTER);
         designLayout.setId("background");
-        clientHandlingLabel.setId("titelText");
+        LoanHandlingLabel.setId("titelText");
 
         newClient.setPadding(new Insets(10));
         accountHandling.setPadding(new Insets(10));
@@ -54,8 +54,8 @@ public class ClientHandlingScene {
         return designLayout;
     }
 
-    public Label getClientHandlingLabel() {
-        return clientHandlingLabel;
+    public Label getLoanHandlingLabel() {
+        return LoanHandlingLabel;
     }
 
     public Button getAccountHandling() {

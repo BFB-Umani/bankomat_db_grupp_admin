@@ -1,9 +1,9 @@
-package bankomat;
+package Bankomat;
 
-import bankomat.Controller.*;
-import bankomat.Model.Admin;
-import bankomat.Model.Database;
-import bankomat.View.*;
+import Bankomat.Controller.*;
+import Bankomat.Database.Repository;
+import Bankomat.Model.Admin;
+import Bankomat.View.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -18,7 +18,7 @@ public class Main extends Application {
     private NewClientScene newClientScene;
     private LoanHandlingScene loanHandlingScene;
     private Admin admin = new Admin();
-    private Database db = new Database();
+    private Repository rep = new Repository();
     public Stage stage = new Stage();
 
     public void start(Stage stage) {
@@ -37,13 +37,13 @@ public class Main extends Application {
         scene.getStylesheets().add(Main.class.getResource("Style.css").toExternalForm());
         stage.setScene(scene);
 
-        AdminLoginSceneController adminLoginSceneController = new AdminLoginSceneController(adminLoginScene,this, db, admin);
+        AdminLoginSceneController adminLoginSceneController = new AdminLoginSceneController(adminLoginScene,this, rep, admin);
         adminLoginSceneController.start();
 
-        AdminHubSceneController adminHubSceneController = new AdminHubSceneController(adminHubScene,this, db, admin);
+        AdminHubSceneController adminHubSceneController = new AdminHubSceneController(adminHubScene,this, rep, admin);
         adminHubSceneController.start();
 
-        AccountHandlingSceneController accountHandlingSceneController = new AccountHandlingSceneController(accountHandlingScene,this, db, admin);
+        AccountHandlingSceneController accountHandlingSceneController = new AccountHandlingSceneController(accountHandlingScene,this, rep, admin);
         accountHandlingSceneController.start();
 
         /*

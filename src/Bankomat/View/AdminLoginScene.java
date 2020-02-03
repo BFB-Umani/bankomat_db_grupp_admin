@@ -1,4 +1,4 @@
-package bankomat.View;
+package Bankomat.View;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

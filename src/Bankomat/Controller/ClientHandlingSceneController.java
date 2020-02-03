@@ -1,4 +1,4 @@
-package bankomat.Controller;
+package Bankomat.Controller;
 
 public class ClientHandlingSceneController {
 }

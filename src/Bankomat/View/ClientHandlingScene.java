@@ -1,4 +1,4 @@
-package bankomat.View;
+package Bankomat.View;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -7,10 +7,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-public class AccountHandlingScene {
+public class ClientHandlingScene {
 
     private VBox designLayout = new VBox();
-    private Label accountHandlingLabel = new Label("Account Handling");
+    private Label clientHandlingLabel = new Label("Admin hub");
     private Button newClient = new Button("create new client account"); // lägg till ny kund
     private Button accountHandling = new Button("handle a clients account"); //skapa nytt konto, avsluta konto, sätt in pengar på konto, ändra räntesats på konto, visa historik för konto
     private Button clientHandling = new Button("handle a clients info"); // uppdatera kunduppgifter, radera kund
@@ -19,8 +19,8 @@ public class AccountHandlingScene {
 
 
     public void setUp() {
-        designLayout.getChildren().add(accountHandlingLabel);
-        designLayout.getChildren().add(logOut);
+        designLayout.getChildren().add(clientHandlingLabel);
+
 
         GridPane buttonLayout = new GridPane();
         buttonLayout.add(newClient,0,0);
@@ -29,11 +29,11 @@ public class AccountHandlingScene {
         buttonLayout.add(loanHandling,1,1);
         designLayout.getChildren().add(buttonLayout);
 
-        accountHandlingLabel.setPrefSize(300,275);
-        accountHandlingLabel.setMaxWidth(Double.MAX_VALUE);
-        accountHandlingLabel.setAlignment(Pos.CENTER);
+        clientHandlingLabel.setPrefSize(300,275);
+        clientHandlingLabel.setMaxWidth(Double.MAX_VALUE);
+        clientHandlingLabel.setAlignment(Pos.CENTER);
         designLayout.setId("background");
-        accountHandlingLabel.setId("titelText");
+        clientHandlingLabel.setId("titelText");
 
         newClient.setPadding(new Insets(10));
         accountHandling.setPadding(new Insets(10));
@@ -54,8 +54,8 @@ public class AccountHandlingScene {
         return designLayout;
     }
 
-    public Label getAccountHandlingLabel() {
-        return accountHandlingLabel;
+    public Label getClientHandlingLabel() {
+        return clientHandlingLabel;
     }
 
     public Button getAccountHandling() {
