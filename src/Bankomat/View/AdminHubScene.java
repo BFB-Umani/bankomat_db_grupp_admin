@@ -11,9 +11,9 @@ public class AdminHubScene {
     private VBox designLayout = new VBox();
     private Label adminHub = new Label("Admin hub");
     private Button accountHandling = new Button("handle client \naccounts"); //skapa nytt konto, avsluta konto, sätt in pengar på konto, ändra räntesats på konto, visa historik för konto
-    private Button newClient = new Button("create new \nclient"); // lägg till ny kund
+    private Button newClient = new Button("add new \nclient"); // lägg till ny kund
     private Button clientHandling = new Button("handle client info"); // uppdatera kunduppgifter, radera kund
-    private Button loanHandling = new Button("add funds to client account"); // visa betalplan på lån, ändra betalningsplan för lån
+    private Button loanHandling = new Button("handle a clients loan"); // visa betalplan på lån, ändra betalningsplan för lån
     private Button logOut = new Button("Log Out");
 
 

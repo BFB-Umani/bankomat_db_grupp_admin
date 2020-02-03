@@ -10,7 +10,7 @@ public class AccountHandlingScene {
 
     private VBox designLayout = new VBox();
     private Label accountHandlingLabel = new Label("Account Handling");
-    private Button newAccount = new Button("create new \nclient"); // lägg till nytt konto
+    private Button newAccount = new Button("create new \naccount"); // lägg till nytt konto
     private Button closeAccount = new Button("handle client info"); // avsluta konto
     private Button addFundsToAccount = new Button("add funds to client account"); // lägg till pengar på kund-konto
     private Button changeRate = new Button("change rate"); // ändra ränta på konto
@@ -21,13 +21,13 @@ public class AccountHandlingScene {
     public void setUp() {
         designLayout.getChildren().add(accountHandlingLabel);
         designLayout.getChildren().add(backB);
+        designLayout.getChildren().add(accountHistory);
 
         GridPane buttonLayout = new GridPane();
-        buttonLayout.add(newAccount,0,0);
-        buttonLayout.add(changeRate,1,0);
+        buttonLayout.add(newAccount,1,0);
+        buttonLayout.add(changeRate,0,0);
         buttonLayout.add(closeAccount,0,1);
         buttonLayout.add(addFundsToAccount,1,1);
-        buttonLayout.add(accountHistory, 2, 0);
         designLayout.getChildren().add(buttonLayout);
 
         accountHandlingLabel.setPrefSize(300,275);
@@ -39,10 +39,10 @@ public class AccountHandlingScene {
         buttonLayout.setHgap(10);
         buttonLayout.setVgap(10);
 
-        newAccount.setMinSize(100,100);
-        changeRate.setMinSize(100,100);
-        closeAccount.setMinSize(100,100);
-        addFundsToAccount.setMinSize(100,100);
+        newAccount.setMinSize(150,100);
+        changeRate.setMinSize(150,100);
+        closeAccount.setMinSize(150,100);
+        addFundsToAccount.setMinSize(150,100);
 
         buttonLayout.setAlignment(Pos.CENTER);
         buttonLayout.setId("buttonLayout");
@@ -57,19 +57,23 @@ public class AccountHandlingScene {
         return accountHandlingLabel;
     }
 
-    public Button getAccountHandling() {
+    public Button getChangeRate() {
         return changeRate;
     }
 
-    public Button getClientHandling() {
+    public Button getCloseAccount() {
         return closeAccount;
     }
 
-    public Button getLoanHandling() {
+    public Button getAddFunds() {
         return addFundsToAccount;
     }
 
-    public Button getNewClient() {
+    public Button getAccountHistory() {
+        return accountHistory;
+    }
+
+    public Button getNewAccount() {
         return newAccount;
     }
 

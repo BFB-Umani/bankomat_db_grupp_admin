@@ -26,6 +26,26 @@ public class AccountHandlingSceneController {
             changeToAdminHub();
         });
 
+        accountHandlingScene.getAccountHistory().setOnAction(actionEvent -> {
+
+        });
+
+        accountHandlingScene.getNewAccount().setOnAction(actionEvent -> {
+
+        });
+
+        accountHandlingScene.getCloseAccount().setOnAction(actionEvent -> {
+
+        });
+
+        accountHandlingScene.getChangeRate().setOnAction(actionEvent -> {
+
+        });
+
+        accountHandlingScene.getAddFunds().setOnAction(actionEvent -> {
+
+        });
+
     }
 
     public void changeToAdminHub() {
