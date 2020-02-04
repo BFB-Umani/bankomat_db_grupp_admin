@@ -14,19 +14,18 @@ public class Repository {
     }
 
 
-    // Tar ut historik för en kund och konto beroende på vilket konto man har valt i comboboxen
-    public List<AccountHistory> getLatestHistory(int custId, int accId) {
+    public List<AccountHistory> getIntervalHistory(int accId, String d1, String d2) {
         List<AccountHistory> accountHistoryList = new ArrayList<>();
         AccountHistory accountHistory = null;
 
         String query = "SELECT * from accountHistory" +
-                " inner join accounttocustomer a on accounthistory.accountId = a.AccountID" +
-                " WHERE accountHistory.histDate > DATE_SUB(NOW(), INTERVAL 1 MONTH) AND a.CustomerID = ?" +
-                " AND a.accountId = ?;";
+                " WHERE DATE (histDate) BETWEEN" +
+                " ? AND ? AND accountId = ?;";
 
         try (PreparedStatement stmt = con.prepareStatement(query)) {
-            stmt.setInt(1, custId);
-            stmt.setInt(2, accId);
+            stmt.setString(1, d1);
+            stmt.setString(2, d2);
+            stmt.setInt(3, accId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Account account = (getAccountById(rs.getInt("accountId")));

@@ -2,6 +2,7 @@ package Bankomat.Controller;
 
 import Bankomat.Database.Repository;
 import Bankomat.Main;
+import Bankomat.Model.AccountHistory;
 import Bankomat.Model.Admin;
 import Bankomat.View.AccountHandlingScene;
 import javafx.geometry.Insets;
@@ -9,11 +10,16 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AccountHandlingSceneController {
     private AccountHandlingScene accountHandlingScene;
@@ -38,6 +44,8 @@ public class AccountHandlingSceneController {
     private Button okButtonNewAccount = new Button("OK");
     private Button okButtonChangeRate = new Button("OK");
     private Button okButtonAddFunds = new Button("OK");
+    private Button okbuttonhistory = new Button("OK");
+    private Button okhistory = new Button("OK");
 
     private int accID;
     private int custID;
@@ -45,6 +53,16 @@ public class AccountHandlingSceneController {
     private double rateChangeRate;
     private int accountNumberInt;
     private int amount;
+
+    private Label firstDate = new Label("Ange första datumet: ");
+    private Label secondDate = new Label("Ange andra datumet: ");
+    private Label accHistNr = new Label("Ange kontonummer: ");
+    DatePicker d1 = new DatePicker();
+    DatePicker d2 = new DatePicker();
+    private TextField accHistNrText = new TextField();
+
+    private Label orderLabel = new Label();
+    private Label historyLabel = new Label();
 
 
     public AccountHandlingSceneController(AccountHandlingScene accountHandlingScene, Main main, Repository rep, Admin admin) {
@@ -62,7 +80,7 @@ public class AccountHandlingSceneController {
         });
 
         accountHandlingScene.getAccountHistory().setOnAction(actionEvent -> {
-
+            changeHistoryBox();
         });
 
         accountHandlingScene.getNewAccount().setOnAction(actionEvent -> {
@@ -85,6 +103,107 @@ public class AccountHandlingSceneController {
 
     public void changeToAdminHub() {
         main.goToAdminHubScene();
+    }
+
+    public void showHistory(List<String> outputHist) {
+        Stage dialogStage = new Stage();
+        VBox layout = new VBox();
+        HBox hBox = new HBox(historyLabel);
+        HBox buttons = new HBox(okhistory);
+        layout.getChildren().add(hBox);
+        layout.getChildren().add(buttons);
+        layout.setMinSize(400,50);
+        buttons.setAlignment(Pos.BOTTOM_CENTER);
+        buttons.setMinSize(300,60);
+        orderLabel.setAlignment(Pos.CENTER);
+
+        String outHistory = "";
+        for(String s: outputHist) {
+            outHistory += s + "\n";
+        }
+        historyLabel.setText(outHistory);
+
+
+        hBox.setAlignment(Pos.CENTER);
+        okhistory.setPrefSize(88,45);
+        buttons.setPadding(new Insets(15, 0, 10, 0));
+        okhistory.setCursor(Cursor.HAND);
+
+        okhistory.setOnAction(actionEvent -> {
+            dialogStage.close();
+        });
+
+        dialogStage.setResizable(false);
+        dialogStage.setScene(new Scene(layout));
+        dialogStage.show();
+        dialogStage.setOnCloseRequest(t -> {
+            dialogStage.close();
+        });
+    }
+
+    private void changeHistoryBox() {
+        Stage dialogStage = new Stage();
+
+
+        VBox layout = new VBox();
+        HBox accHbox = new HBox(accHistNr);
+        HBox accNrHbox = new HBox(accHistNrText);
+
+        HBox hBox = new HBox(firstDate);
+        HBox pinHbox = new HBox(secondDate);
+        HBox prNrArea = new HBox(d1);
+        HBox pinArea = new HBox(d2);
+        HBox buttons = new HBox(okbuttonhistory);
+        layout.getChildren().add(accHbox);
+        layout.getChildren().add(accNrHbox);
+        layout.getChildren().add(hBox);
+        layout.getChildren().add(prNrArea);
+        layout.getChildren().add(pinHbox);
+        layout.getChildren().add(pinArea);
+        layout.getChildren().add(buttons);
+        layout.setMinSize(400, 50);
+        buttons.setAlignment(Pos.BOTTOM_CENTER);
+        buttons.setMinSize(300, 60);
+        firstDate.setAlignment(Pos.CENTER);
+        accHbox.setAlignment(Pos.CENTER);
+        accNrHbox.setAlignment(Pos.CENTER);
+        hBox.setAlignment(Pos.CENTER);
+        pinHbox.setAlignment(Pos.CENTER);
+        prNrArea.setAlignment(Pos.CENTER);
+        prNrArea.setPadding(new Insets(15));
+        pinArea.setAlignment(Pos.CENTER);
+        pinArea.setPadding(new Insets(15));
+        okbuttonhistory.setPrefSize(88, 45);
+        buttons.setPadding(new Insets(15, 0, 10, 0));
+        okbuttonhistory.setCursor(Cursor.HAND);
+
+        okbuttonhistory.setOnAction(actionEvent -> {
+            System.out.println(d1.getValue());
+            System.out.println(d2.getValue());
+            System.out.println(accHistNrText.getText());
+            int accId = Integer.parseInt(accHistNrText.getText());
+            String s1 = d1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            String s2 = d2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            System.out.println(s1 + " " + s2);
+            List<AccountHistory> historyList = rep.getIntervalHistory(accId,
+                    s1, s2);
+
+            for(AccountHistory a: historyList) {
+                System.out.println("Före: " +  a.getBalanceBefore() + " Uttag: " + a.getWithdraw() + " Efter: " +
+                        a.getBalanceAfter() + " Datum:" + a.getDate());;
+            }
+
+            List<String> outputHist = historyList.stream().map(a ->"Före: " +  a.getBalanceBefore() + " Uttag: " + a.getWithdraw() + " Efter: " +
+                    a.getBalanceAfter() + " Datum:" + a .getDate()).collect(Collectors.toList());
+            showHistory(outputHist);
+        });
+
+        dialogStage.setResizable(false);
+        dialogStage.setScene(new Scene(layout));
+        dialogStage.show();
+        dialogStage.setOnCloseRequest(t -> {
+            dialogStage.close();
+        });
     }
 
     public void closeAccountBox() {
@@ -197,6 +316,8 @@ public class AccountHandlingSceneController {
             dialogStage.close();
         });
     }
+
+
 
     public void addFundsToAccountBox(){
         Stage dialogStage = new Stage();
