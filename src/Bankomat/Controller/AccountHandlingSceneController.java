@@ -27,7 +27,7 @@ public class AccountHandlingSceneController {
     private Label addFundsLabelAccount = new Label("Ange konto att sätta in pengar på");
     private Label addFundsLabelAmount = new Label("Ange belopp");
 
-    private TextField accountnumber = new TextField();
+    private TextField accountNumber = new TextField();
     private TextField createNewAccountTF = new TextField();
     private TextField changeRateTFAccount = new TextField();
     private TextField changeRateTFRate = new TextField();
@@ -35,9 +35,9 @@ public class AccountHandlingSceneController {
     private TextField addFundsTFAmount = new TextField();
 
     private Button okbutton = new Button("OK");
-    private Button okbuttonnewaccount = new Button("OK");
-    private Button okbuttonchangerate = new Button("OK");
-    private Button okbuttonaddfunds = new Button("OK");
+    private Button okButtonNewAccount = new Button("OK");
+    private Button okButtonChangeRate = new Button("OK");
+    private Button okButtonAddFunds = new Button("OK");
 
     private int accID;
     private int custID;
@@ -92,7 +92,7 @@ public class AccountHandlingSceneController {
         Stage dialogStage = new Stage();
         VBox layout = new VBox();
         HBox hBox = new HBox(closeLabel);
-        HBox prNrArea = new HBox(accountnumber);
+        HBox prNrArea = new HBox(accountNumber);
         HBox buttons = new HBox(okbutton);
         layout.getChildren().add(hBox);
         layout.getChildren().add(prNrArea);
@@ -109,7 +109,7 @@ public class AccountHandlingSceneController {
         okbutton.setCursor(Cursor.HAND);
 
         okbutton.setOnAction(actionEvent -> {
-            accID = Integer.parseInt(accountnumber.getText());
+            accID = Integer.parseInt(accountNumber.getText());
             rep.deleteAccount(accID);
             dialogStage.close();
         });
@@ -127,7 +127,7 @@ public class AccountHandlingSceneController {
         VBox layout = new VBox();
         HBox hBox = new HBox(newAccountLabel);
         HBox nrArea = new HBox(createNewAccountTF);
-        HBox buttons = new HBox(okbuttonnewaccount);
+        HBox buttons = new HBox(okButtonNewAccount);
         layout.getChildren().add(hBox);
         layout.getChildren().add(nrArea);
         layout.getChildren().add(buttons);
@@ -138,11 +138,11 @@ public class AccountHandlingSceneController {
         hBox.setAlignment(Pos.CENTER);
         nrArea.setAlignment(Pos.CENTER);
         nrArea.setPadding(new Insets(15));
-        okbutton.setPrefSize(88, 45);
+        okButtonNewAccount.setPrefSize(88, 45);
         buttons.setPadding(new Insets(15, 0, 10, 0));
-        okbutton.setCursor(Cursor.HAND);
+        okButtonNewAccount.setCursor(Cursor.HAND);
 
-        okbutton.setOnAction(actionEvent -> {
+        okButtonNewAccount.setOnAction(actionEvent -> {
             custID = Integer.parseInt(createNewAccountTF.getText());
             rep.createAccount(custID);
             dialogStage.close();
@@ -163,7 +163,7 @@ public class AccountHandlingSceneController {
         HBox pinHbox = new HBox(changeRateLabelRate);
         HBox prNrArea = new HBox(changeRateTFAccount);
         HBox pinArea = new HBox(changeRateTFRate);
-        HBox buttons = new HBox(okbuttonchangerate);
+        HBox buttons = new HBox(okButtonChangeRate);
         layout.getChildren().add(hBox);
         layout.getChildren().add(prNrArea);
         layout.getChildren().add(pinHbox);
@@ -179,11 +179,11 @@ public class AccountHandlingSceneController {
         prNrArea.setPadding(new Insets(15));
         pinArea.setAlignment(Pos.CENTER);
         pinArea.setPadding(new Insets(15));
-        okbuttonchangerate.setPrefSize(88, 45);
+        okButtonChangeRate.setPrefSize(88, 45);
         buttons.setPadding(new Insets(15, 0, 10, 0));
-        okbuttonchangerate.setCursor(Cursor.HAND);
+        okButtonChangeRate.setCursor(Cursor.HAND);
 
-        okbuttonchangerate.setOnAction(actionEvent -> {
+        okButtonChangeRate.setOnAction(actionEvent -> {
             accountnumberChangeRate = Integer.parseInt(changeRateTFAccount.getText());
             rateChangeRate = Double.parseDouble(changeRateTFRate.getText());
             rep.changeRateForAccount(accountnumberChangeRate, rateChangeRate);
@@ -205,7 +205,7 @@ public class AccountHandlingSceneController {
         HBox pinHbox = new HBox(addFundsLabelAmount);
         HBox prNrArea = new HBox(addFundsTFAccount);
         HBox pinArea = new HBox(addFundsTFAmount);
-        HBox buttons = new HBox(okbuttonaddfunds);
+        HBox buttons = new HBox(okButtonAddFunds);
         layout.getChildren().add(hBox);
         layout.getChildren().add(prNrArea);
         layout.getChildren().add(pinHbox);
@@ -221,11 +221,11 @@ public class AccountHandlingSceneController {
         prNrArea.setPadding(new Insets(15));
         pinArea.setAlignment(Pos.CENTER);
         pinArea.setPadding(new Insets(15));
-        okbuttonaddfunds.setPrefSize(88,45);
+        okButtonAddFunds.setPrefSize(88,45);
         buttons.setPadding(new Insets(15, 0, 10, 0));
-        okbuttonaddfunds.setCursor(Cursor.HAND);
+        okButtonAddFunds.setCursor(Cursor.HAND);
 
-        okbuttonaddfunds.setOnAction(actionEvent -> {
+        okButtonAddFunds.setOnAction(actionEvent -> {
             accountNumberInt = Integer.parseInt(addFundsTFAccount.getText());
             amount = Integer.parseInt(addFundsTFAmount.getText());
             rep.depositIntoAccount(accountNumberInt, amount);

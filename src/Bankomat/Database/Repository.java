@@ -278,7 +278,7 @@ public class Repository {
 
     //    ändrar ränta för konto
     public void changeRateForAccount(int accountID, double newRate) {
-        try (CallableStatement stmt = con.prepareCall("CALL changerateForAccount(?, ?);")) {
+        try (CallableStatement stmt = con.prepareCall("CALL changeAccountRate(?, ?);")) {
             stmt.setInt(1, accountID);
             stmt.setDouble(2, newRate);
             stmt.execute();

@@ -4,7 +4,6 @@ import Bankomat.Database.Repository;
 import Bankomat.Main;
 import Bankomat.Model.Admin;
 import Bankomat.Model.Loan;
-import Bankomat.View.ClientHandlingScene;
 import Bankomat.View.LoanHandlingScene;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -18,7 +17,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import javax.swing.*;
-import java.util.Date;
 
 public class LoanHandlingSceneController {
 
@@ -26,29 +24,22 @@ public class LoanHandlingSceneController {
     private Repository rep;
     private Main main;
     private Admin admin;
-    private Label closeLabel = new Label("Ange kontonummer");
-    private Label newAccountLabel = new Label("Ange kundnummer");
+
     private Label changeRateLabelAccount = new Label("Ange kontonummer");
     private Label changeRateLabelRate = new Label("Ange ny ränta");
-    private Label addFundsLabelAccount = new Label("Ange konto att sätta in pengar på");
-    private Label addFundsLabelAmount = new Label("Ange belopp");
+    private Label updatePaymentPlanAccount = new Label("Ange konto för att byta betalningsplan på"); //update payment plan
+    private Label updatePaymentPlanDate = new Label("Ange datum \"XXXX-XX-XX\"");
 
-    private TextField accountnumber = new TextField();
-    private TextField createNewAccountTF = new TextField();
     private TextField changeRateTFAccount = new TextField();
     private TextField changeRateTFRate = new TextField();
-    private TextField addFundsTFAccount = new TextField();
-    private TextField addFundsTFAmount = new TextField();
+    private TextField updatePaymentTFAccount = new TextField();
+    private TextField updatePaymentTFDate = new TextField();
 
-    private Button okbuttonchangerate = new Button("OK");
+    private Button okB = new Button("OK");
 
-    private int accID;
     private String newDate;
     private int accountnumberChangeRate;
     private double rateChangeRate;
-    private int accountNumberInt;
-    private int amount;
-
 
     public LoanHandlingSceneController(LoanHandlingScene loanHandlingScene, Main main, Repository rep, Admin admin) {
         this.loanHandlingScene = loanHandlingScene;
@@ -91,7 +82,7 @@ public class LoanHandlingSceneController {
         HBox pinHbox = new HBox(changeRateLabelRate);
         HBox prNrArea = new HBox(changeRateTFAccount);
         HBox pinArea = new HBox(changeRateTFRate);
-        HBox buttons = new HBox(okbuttonchangerate);
+        HBox buttons = new HBox(okB);
         layout.getChildren().add(hBox);
         layout.getChildren().add(prNrArea);
         layout.getChildren().add(pinHbox);
@@ -107,11 +98,11 @@ public class LoanHandlingSceneController {
         prNrArea.setPadding(new Insets(15));
         pinArea.setAlignment(Pos.CENTER);
         pinArea.setPadding(new Insets(15));
-        okbuttonchangerate.setPrefSize(88, 45);
+        okB.setPrefSize(88, 45);
         buttons.setPadding(new Insets(15, 0, 10, 0));
-        okbuttonchangerate.setCursor(Cursor.HAND);
+        okB.setCursor(Cursor.HAND);
 
-        okbuttonchangerate.setOnAction(actionEvent -> {
+        okB.setOnAction(actionEvent -> {
             accountnumberChangeRate = Integer.parseInt(changeRateTFAccount.getText());
             rateChangeRate = Double.parseDouble(changeRateTFRate.getText());
             rep.changeRateForLoan(accountnumberChangeRate, rateChangeRate);
@@ -129,11 +120,11 @@ public class LoanHandlingSceneController {
     public void changeDateBox() {
         Stage dialogStage = new Stage();
         VBox layout = new VBox();
-        HBox hBox = new HBox(changeRateLabelAccount);
-        HBox pinHbox = new HBox(changeRateLabelRate);
-        HBox prNrArea = new HBox(changeRateTFAccount);
-        HBox pinArea = new HBox(changeRateTFRate);
-        HBox buttons = new HBox(okbuttonchangerate);
+        HBox hBox = new HBox(updatePaymentPlanAccount);
+        HBox pinHbox = new HBox(updatePaymentPlanDate);
+        HBox prNrArea = new HBox(updatePaymentTFAccount);
+        HBox pinArea = new HBox(updatePaymentTFDate);
+        HBox buttons = new HBox(okB);
         layout.getChildren().add(hBox);
         layout.getChildren().add(prNrArea);
         layout.getChildren().add(pinHbox);
@@ -149,11 +140,11 @@ public class LoanHandlingSceneController {
         prNrArea.setPadding(new Insets(15));
         pinArea.setAlignment(Pos.CENTER);
         pinArea.setPadding(new Insets(15));
-        okbuttonchangerate.setPrefSize(88, 45);
+        okB.setPrefSize(88, 45);
         buttons.setPadding(new Insets(15, 0, 10, 0));
-        okbuttonchangerate.setCursor(Cursor.HAND);
+        okB.setCursor(Cursor.HAND);
 
-        okbuttonchangerate.setOnAction(actionEvent -> {
+        okB.setOnAction(actionEvent -> {
             accountnumberChangeRate = Integer.parseInt(changeRateTFAccount.getText());
             newDate = changeRateTFRate.getText();
             rep.changePaymentPlanForLoan(accountnumberChangeRate, newDate);

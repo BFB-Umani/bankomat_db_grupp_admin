@@ -13,7 +13,7 @@ public class LoanHandlingScene {
     private Label clientHandlingLabel = new Label("Client handling");
     private Button paymentPlan = new Button("show payment Plan");
     private Button changePayment = new Button("update payment plan");
-    private Button changeRent = new Button("update rent for loan");
+    private Button changeRent = new Button("update rate for loan");
     private Button backB = new Button("back");
 
 
@@ -35,11 +35,10 @@ public class LoanHandlingScene {
         clientHandlingLabel.setId("titelText");
 
         changePayment.setPadding(new Insets(10));
-        paymentPlan.setPadding(new Insets(10));
+        changeRent.setPadding(new Insets(10));
 
         changePayment.setMinSize(150,100);
         changeRent.setMinSize(150,100);
-
 
         buttonLayout.setAlignment(Pos.CENTER);
         buttonLayout.setVgap(10);
