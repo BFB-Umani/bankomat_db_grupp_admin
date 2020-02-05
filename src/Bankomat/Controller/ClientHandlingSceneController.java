@@ -17,39 +17,34 @@ import javafx.stage.Stage;
 
 public class ClientHandlingSceneController {
 
-    private ClientHandlingScene clientHandlingScene;
+    private ClientHandlingScene chs;
     private Repository rep;
     private Main main;
     private Admin admin;
-    private Label orderLabel = new Label("skriv in personNummer för kund");
-    private Label pinLabel = new Label("skriv in ny personnummer och ny pin-kod för kund");
-    private TextField prsNrField = new TextField();
-    private TextField pinField = new TextField();
-    private Button ok = new Button("ok");
     private int pin;
     private int customerId;
     private String prsNr;
 
 
     public ClientHandlingSceneController(ClientHandlingScene clientHandlingScene, Main main, Repository rep, Admin admin) {
-        this.clientHandlingScene = clientHandlingScene;
+        this.chs = clientHandlingScene;
         this.main = main;
         this.rep = rep;
         this.admin = admin;
     }
 
     public void start() {
-        clientHandlingScene.setUp();
+        chs.setUp();
 
-        clientHandlingScene.getBackB().setOnAction(actionEvent -> {
+        chs.getBackB().setOnAction(actionEvent -> {
             changeToAdminHub();
         });
 
-        clientHandlingScene.getUpdateClient().setOnAction(actionEvent -> {
+        chs.getUpdateClient().setOnAction(actionEvent -> {
             updateClientBox();
         });
 
-        clientHandlingScene.getDeleteClient().setOnAction(actionEvent -> {
+        chs.getDeleteClient().setOnAction(actionEvent -> {
             deleteAccountBox();
 
         });
@@ -60,84 +55,27 @@ public class ClientHandlingSceneController {
     }
 
     public void deleteAccountBox() {
-
-        Stage dialogStage = new Stage();
-        VBox layout = new VBox();
-        HBox hBox = new HBox(orderLabel);
-        HBox prNrArea = new HBox(prsNrField);
-        HBox buttons = new HBox(ok);
-        layout.getChildren().add(hBox);
-        layout.getChildren().add(prNrArea);
-        layout.getChildren().add(buttons);
-        layout.setMinSize(400,50);
-        buttons.setAlignment(Pos.BOTTOM_CENTER);
-        buttons.setMinSize(300,60);
-        orderLabel.setAlignment(Pos.CENTER);
-        hBox.setAlignment(Pos.CENTER);
-        prNrArea.setAlignment(Pos.CENTER);
-        prNrArea.setPadding(new Insets(15));
-        ok.setPrefSize(88,45);
-        buttons.setPadding(new Insets(15, 0, 10, 0));
-        ok.setCursor(Cursor.HAND);
-
-        ok.setOnAction(actionEvent -> {
-            prsNr = prsNrField.getText();
+        chs.deleteAccountBox();
+        chs.getOk().setOnAction(actionEvent -> {
+            prsNr = chs.getPrsNrField().getText();
             rep.deleteCustomer(prsNr);
-            dialogStage.close();
+            chs.getDialogStage().close();
         });
 
-        dialogStage.setResizable(false);
-        dialogStage.setScene(new Scene(layout));
-        dialogStage.show();
-        dialogStage.setOnCloseRequest(t -> {
-            dialogStage.close();
-        });
     }
 
     public void updateClientBox() {
-
-        Stage dialogStage = new Stage();
-        VBox layout = new VBox();
-        HBox hBox = new HBox(orderLabel);
-        HBox pinHbox = new HBox(pinLabel);
-        HBox prNrArea = new HBox(prsNrField);
-        HBox pinArea = new HBox(pinField);
-        HBox buttons = new HBox(ok);
-        layout.getChildren().add(hBox);
-        layout.getChildren().add(prNrArea);
-        layout.getChildren().add(pinHbox);
-        layout.getChildren().add(pinArea);
-        layout.getChildren().add(buttons);
-        layout.setMinSize(400,50);
-        buttons.setAlignment(Pos.BOTTOM_CENTER);
-        buttons.setMinSize(300,60);
-        orderLabel.setAlignment(Pos.CENTER);
-        hBox.setAlignment(Pos.CENTER);
-        pinHbox.setAlignment(Pos.CENTER);
-        prNrArea.setAlignment(Pos.CENTER);
-        prNrArea.setPadding(new Insets(15));
-        pinArea.setAlignment(Pos.CENTER);
-        pinArea.setPadding(new Insets(15));
-        ok.setPrefSize(88,45);
-        buttons.setPadding(new Insets(15, 0, 10, 0));
-        ok.setCursor(Cursor.HAND);
-
-        ok.setOnAction(actionEvent -> {
+        chs.updateClientBox();
+        chs.getOk().setOnAction(actionEvent -> {
             try {
-                customerId = rep.getClient(prsNrField.getText()).getID();
-                pin = Integer.parseInt(pinField.getText());
+                customerId = rep.getClient(chs.getPrsNrField().getText()).getID();
+                pin = Integer.parseInt(chs.getPinField().getText());
             }catch (Exception e) {
                 e.printStackTrace();
             }
             rep.updateCustomer(customerId,pin);
-            dialogStage.close();
+            chs.getDialogStage().close();
         });
 
-        dialogStage.setResizable(false);
-        dialogStage.setScene(new Scene(layout));
-        dialogStage.show();
-        dialogStage.setOnCloseRequest(t -> {
-            dialogStage.close();
-        });
     }
 }

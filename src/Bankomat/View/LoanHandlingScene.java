@@ -2,10 +2,15 @@ package Bankomat.View;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class LoanHandlingScene {
 
@@ -15,7 +20,18 @@ public class LoanHandlingScene {
     private Button changePayment = new Button("update payment plan");
     private Button changeRent = new Button("update rate for loan");
     private Button backB = new Button("back");
+    private Label changeRateLabelAccount = new Label("Ange kontonummer");
+    private Label changeRateLabelRate = new Label("Ange ny ränta");
+    private Label updatePaymentPlanAccount = new Label("Ange konto för att byta betalningsplan på"); //update payment plan
+    private Label updatePaymentPlanDate = new Label("Ange datum \"XXXX-XX-XX\"");
 
+    private TextField changeRateTFAccount = new TextField();
+    private TextField changeRateTFRate = new TextField();
+    private TextField updatePaymentTFAccount = new TextField();
+    private TextField updatePaymentTFDate = new TextField();
+
+    private Button okB = new Button("OK");
+    private Stage dialogStage;
 
     public void setUp() {
         designLayout.getChildren().add(clientHandlingLabel);
@@ -46,6 +62,73 @@ public class LoanHandlingScene {
         buttonLayout.setId("buttonLayout");
     }
 
+    public void changeRateBox() {
+        dialogStage = new Stage();
+        VBox layout = new VBox();
+        HBox hBox = new HBox(changeRateLabelAccount);
+        HBox pinHbox = new HBox(changeRateLabelRate);
+        HBox prNrArea = new HBox(changeRateTFAccount);
+        HBox pinArea = new HBox(changeRateTFRate);
+        HBox buttons = new HBox(okB);
+        layout.getChildren().add(hBox);
+        layout.getChildren().add(prNrArea);
+        layout.getChildren().add(pinHbox);
+        layout.getChildren().add(pinArea);
+        layout.getChildren().add(buttons);
+        layout.setMinSize(400, 50);
+        buttons.setAlignment(Pos.BOTTOM_CENTER);
+        buttons.setMinSize(300, 60);
+        changeRateLabelAccount.setAlignment(Pos.CENTER);
+        hBox.setAlignment(Pos.CENTER);
+        pinHbox.setAlignment(Pos.CENTER);
+        prNrArea.setAlignment(Pos.CENTER);
+        prNrArea.setPadding(new Insets(15));
+        pinArea.setAlignment(Pos.CENTER);
+        pinArea.setPadding(new Insets(15));
+        okB.setPrefSize(88, 45);
+        buttons.setPadding(new Insets(15, 0, 10, 0));
+        okB.setCursor(Cursor.HAND);
+        dialogStage.setResizable(false);
+        dialogStage.setScene(new Scene(layout));
+        dialogStage.show();
+        dialogStage.setOnCloseRequest(t -> {
+            dialogStage.close();
+        });
+    }
+
+    public void changeDateBox() {
+        dialogStage = new Stage();
+        VBox layout = new VBox();
+        HBox hBox = new HBox(updatePaymentPlanAccount);
+        HBox pinHbox = new HBox(updatePaymentPlanDate);
+        HBox prNrArea = new HBox(updatePaymentTFAccount);
+        HBox pinArea = new HBox(updatePaymentTFDate);
+        HBox buttons = new HBox(okB);
+        layout.getChildren().add(hBox);
+        layout.getChildren().add(prNrArea);
+        layout.getChildren().add(pinHbox);
+        layout.getChildren().add(pinArea);
+        layout.getChildren().add(buttons);
+        layout.setMinSize(400, 50);
+        buttons.setAlignment(Pos.BOTTOM_CENTER);
+        buttons.setMinSize(300, 60);
+        changeRateLabelAccount.setAlignment(Pos.CENTER);
+        hBox.setAlignment(Pos.CENTER);
+        pinHbox.setAlignment(Pos.CENTER);
+        prNrArea.setAlignment(Pos.CENTER);
+        prNrArea.setPadding(new Insets(15));
+        pinArea.setAlignment(Pos.CENTER);
+        pinArea.setPadding(new Insets(15));
+        okB.setPrefSize(88, 45);
+        buttons.setPadding(new Insets(15, 0, 10, 0));
+        okB.setCursor(Cursor.HAND);
+        dialogStage.setResizable(false);
+        dialogStage.setScene(new Scene(layout));
+        dialogStage.show();
+        dialogStage.setOnCloseRequest(t -> {
+            dialogStage.close();
+        });
+    }
 
     public VBox getDesignLayout() {
         return designLayout;
@@ -69,5 +152,29 @@ public class LoanHandlingScene {
 
     public Button getBackB() {
         return backB;
+    }
+
+    public TextField getChangeRateTFAccount() {
+        return changeRateTFAccount;
+    }
+
+    public TextField getChangeRateTFRate() {
+        return changeRateTFRate;
+    }
+
+    public TextField getUpdatePaymentTFAccount() {
+        return updatePaymentTFAccount;
+    }
+
+    public TextField getUpdatePaymentTFDate() {
+        return updatePaymentTFDate;
+    }
+
+    public Button getOkB() {
+        return okB;
+    }
+
+    public Stage getDialogStage() {
+        return dialogStage;
     }
 }

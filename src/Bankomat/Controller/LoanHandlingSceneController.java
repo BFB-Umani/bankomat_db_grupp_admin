@@ -20,52 +20,39 @@ import javax.swing.*;
 
 public class LoanHandlingSceneController {
 
-    private LoanHandlingScene loanHandlingScene;
+    private LoanHandlingScene lhs;
     private Repository rep;
     private Main main;
     private Admin admin;
-
-    private Label changeRateLabelAccount = new Label("Ange kontonummer");
-    private Label changeRateLabelRate = new Label("Ange ny ränta");
-    private Label updatePaymentPlanAccount = new Label("Ange konto för att byta betalningsplan på"); //update payment plan
-    private Label updatePaymentPlanDate = new Label("Ange datum \"XXXX-XX-XX\"");
-
-    private TextField changeRateTFAccount = new TextField();
-    private TextField changeRateTFRate = new TextField();
-    private TextField updatePaymentTFAccount = new TextField();
-    private TextField updatePaymentTFDate = new TextField();
-
-    private Button okB = new Button("OK");
-
     private String newDate;
     private int accountnumberChangeRate;
     private double rateChangeRate;
 
     public LoanHandlingSceneController(LoanHandlingScene loanHandlingScene, Main main, Repository rep, Admin admin) {
-        this.loanHandlingScene = loanHandlingScene;
+        this.lhs = loanHandlingScene;
         this.main = main;
         this.rep = rep;
         this.admin = admin;
     }
 
     public void start() {
-        loanHandlingScene.setUp();
+        lhs.setUp();
 
-        loanHandlingScene.getBackB().setOnAction(actionEvent -> {
+        lhs.getBackB().setOnAction(actionEvent -> {
             changeToAdminHub();
         });
 
-        loanHandlingScene.getPaymentPlan().setOnAction(actionEvent -> {
+        lhs.getPaymentPlan().setOnAction(actionEvent -> {
             Loan loan = rep.getPaymentPlan();
             JOptionPane.showMessageDialog(null, loan.getPaymentPlan());
         });
 
-        loanHandlingScene.getChangePayment().setOnAction(actionEvent -> {
+        lhs.getChangePayment().setOnAction(actionEvent -> {
             changeDateBox();
 
         });
 
-        loanHandlingScene.getChangeRent().setOnAction(actionEvent -> {
+        lhs.getChangeRent().setOnAction(actionEvent -> {
             changeRateBox();
 
         });
@@ -76,86 +63,24 @@ public class LoanHandlingSceneController {
     }
 
     public void changeRateBox() {
-        Stage dialogStage = new Stage();
-        VBox layout = new VBox();
-        HBox hBox = new HBox(changeRateLabelAccount);
-        HBox pinHbox = new HBox(changeRateLabelRate);
-        HBox prNrArea = new HBox(changeRateTFAccount);
-        HBox pinArea = new HBox(changeRateTFRate);
-        HBox buttons = new HBox(okB);
-        layout.getChildren().add(hBox);
-        layout.getChildren().add(prNrArea);
-        layout.getChildren().add(pinHbox);
-        layout.getChildren().add(pinArea);
-        layout.getChildren().add(buttons);
-        layout.setMinSize(400, 50);
-        buttons.setAlignment(Pos.BOTTOM_CENTER);
-        buttons.setMinSize(300, 60);
-        changeRateLabelAccount.setAlignment(Pos.CENTER);
-        hBox.setAlignment(Pos.CENTER);
-        pinHbox.setAlignment(Pos.CENTER);
-        prNrArea.setAlignment(Pos.CENTER);
-        prNrArea.setPadding(new Insets(15));
-        pinArea.setAlignment(Pos.CENTER);
-        pinArea.setPadding(new Insets(15));
-        okB.setPrefSize(88, 45);
-        buttons.setPadding(new Insets(15, 0, 10, 0));
-        okB.setCursor(Cursor.HAND);
-
-        okB.setOnAction(actionEvent -> {
-            accountnumberChangeRate = Integer.parseInt(changeRateTFAccount.getText());
-            rateChangeRate = Double.parseDouble(changeRateTFRate.getText());
+        lhs.changeRateBox();
+        lhs.getOkB().setOnAction(actionEvent -> {
+            accountnumberChangeRate = Integer.parseInt(lhs.getChangeRateTFAccount().getText());
+            rateChangeRate = Double.parseDouble(lhs.getChangeRateTFRate().getText());
             rep.changeRateForLoan(accountnumberChangeRate, rateChangeRate);
-            dialogStage.close();
+            lhs.getDialogStage().close();
         });
 
-        dialogStage.setResizable(false);
-        dialogStage.setScene(new Scene(layout));
-        dialogStage.show();
-        dialogStage.setOnCloseRequest(t -> {
-            dialogStage.close();
-        });
     }
 
     public void changeDateBox() {
-        Stage dialogStage = new Stage();
-        VBox layout = new VBox();
-        HBox hBox = new HBox(updatePaymentPlanAccount);
-        HBox pinHbox = new HBox(updatePaymentPlanDate);
-        HBox prNrArea = new HBox(updatePaymentTFAccount);
-        HBox pinArea = new HBox(updatePaymentTFDate);
-        HBox buttons = new HBox(okB);
-        layout.getChildren().add(hBox);
-        layout.getChildren().add(prNrArea);
-        layout.getChildren().add(pinHbox);
-        layout.getChildren().add(pinArea);
-        layout.getChildren().add(buttons);
-        layout.setMinSize(400, 50);
-        buttons.setAlignment(Pos.BOTTOM_CENTER);
-        buttons.setMinSize(300, 60);
-        changeRateLabelAccount.setAlignment(Pos.CENTER);
-        hBox.setAlignment(Pos.CENTER);
-        pinHbox.setAlignment(Pos.CENTER);
-        prNrArea.setAlignment(Pos.CENTER);
-        prNrArea.setPadding(new Insets(15));
-        pinArea.setAlignment(Pos.CENTER);
-        pinArea.setPadding(new Insets(15));
-        okB.setPrefSize(88, 45);
-        buttons.setPadding(new Insets(15, 0, 10, 0));
-        okB.setCursor(Cursor.HAND);
-
-        okB.setOnAction(actionEvent -> {
-            accountnumberChangeRate = Integer.parseInt(changeRateTFAccount.getText());
-            newDate = changeRateTFRate.getText();
+        lhs.changeDateBox();
+        lhs.getOkB().setOnAction(actionEvent -> {
+            accountnumberChangeRate = Integer.parseInt(lhs.getChangeRateTFAccount().getText());
+            newDate = lhs.getChangeRateTFRate().getText();
             rep.changePaymentPlanForLoan(accountnumberChangeRate, newDate);
-            dialogStage.close();
+            lhs.getDialogStage().close();
         });
 
-        dialogStage.setResizable(false);
-        dialogStage.setScene(new Scene(layout));
-        dialogStage.show();
-        dialogStage.setOnCloseRequest(t -> {
-            dialogStage.close();
-        });
     }
 }
