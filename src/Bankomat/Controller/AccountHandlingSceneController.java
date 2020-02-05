@@ -22,80 +22,44 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AccountHandlingSceneController {
-    private AccountHandlingScene accountHandlingScene;
+    private AccountHandlingScene ahs;
     private Repository rep;
     private Main main;
     private Admin admin;
-    private Label closeLabel = new Label("Ange kontonummer");
-    private Label newAccountLabel = new Label("Ange kundnummer");
-    private Label changeRateLabelAccount = new Label("Ange kontonummer");
-    private Label changeRateLabelRate = new Label("Ange ny ränta");
-    private Label addFundsLabelAccount = new Label("Ange konto att sätta in pengar på");
-    private Label addFundsLabelAmount = new Label("Ange belopp");
-
-    private TextField accountNumber = new TextField();
-    private TextField createNewAccountTF = new TextField();
-    private TextField changeRateTFAccount = new TextField();
-    private TextField changeRateTFRate = new TextField();
-    private TextField addFundsTFAccount = new TextField();
-    private TextField addFundsTFAmount = new TextField();
-
-    private Button okbutton = new Button("OK");
-    private Button okButtonNewAccount = new Button("OK");
-    private Button okButtonChangeRate = new Button("OK");
-    private Button okButtonAddFunds = new Button("OK");
-    private Button okbuttonhistory = new Button("OK");
-    private Button okhistory = new Button("OK");
-
-    private int accID;
-    private int custID;
-    private int accountnumberChangeRate;
-    private double rateChangeRate;
-    private int accountNumberInt;
-    private int amount;
-
-    private Label firstDate = new Label("Ange första datumet: ");
-    private Label secondDate = new Label("Ange andra datumet: ");
-    private Label accHistNr = new Label("Ange kontonummer: ");
-    DatePicker d1 = new DatePicker();
-    DatePicker d2 = new DatePicker();
-    private TextField accHistNrText = new TextField();
-
-    private Label orderLabel = new Label();
-    private Label historyLabel = new Label();
 
 
     public AccountHandlingSceneController(AccountHandlingScene accountHandlingScene, Main main, Repository rep, Admin admin) {
-        this.accountHandlingScene = accountHandlingScene;
+        this.ahs = accountHandlingScene;
         this.main = main;
         this.rep = rep;
         this.admin = admin;
     }
 
     public void start() {
-        accountHandlingScene.setUp();
+        ahs.setUp();
 
-        accountHandlingScene.getBackB().setOnAction(actionEvent -> {
+        ahs.getBackB().setOnAction(actionEvent -> {
             changeToAdminHub();
         });
 
-        accountHandlingScene.getAccountHistory().setOnAction(actionEvent -> {
+        ahs.getAccountHistory().setOnAction(actionEvent -> {
+
             changeHistoryBox();
         });
 
-        accountHandlingScene.getNewAccount().setOnAction(actionEvent -> {
+        ahs.getNewAccount().setOnAction(actionEvent -> {
             newAccountBox();
         });
 
-        accountHandlingScene.getCloseAccount().setOnAction(actionEvent -> {
+        ahs.getCloseAccount().setOnAction(actionEvent -> {
             closeAccountBox();
         });
 
-        accountHandlingScene.getChangeRate().setOnAction(actionEvent -> {
+        ahs.getChangeRate().setOnAction(actionEvent -> {
             changeRateBox();
         });
 
-        accountHandlingScene.getAddFunds().setOnAction(actionEvent -> {
+        ahs.getAddFunds().setOnAction(actionEvent -> {
             addFundsToAccountBox();
         });
 
@@ -105,85 +69,13 @@ public class AccountHandlingSceneController {
         main.goToAdminHubScene();
     }
 
-    public void showHistory(List<String> outputHist) {
-        Stage dialogStage = new Stage();
-        VBox layout = new VBox();
-        HBox hBox = new HBox(historyLabel);
-        HBox buttons = new HBox(okhistory);
-        layout.getChildren().add(hBox);
-        layout.getChildren().add(buttons);
-        layout.setMinSize(400,50);
-        buttons.setAlignment(Pos.BOTTOM_CENTER);
-        buttons.setMinSize(300,60);
-        orderLabel.setAlignment(Pos.CENTER);
-
-        String outHistory = "";
-        for(String s: outputHist) {
-            outHistory += s + "\n";
-        }
-        historyLabel.setText(outHistory);
-
-
-        hBox.setAlignment(Pos.CENTER);
-        okhistory.setPrefSize(88,45);
-        buttons.setPadding(new Insets(15, 0, 10, 0));
-        okhistory.setCursor(Cursor.HAND);
-
-        okhistory.setOnAction(actionEvent -> {
-            dialogStage.close();
-        });
-
-        dialogStage.setResizable(false);
-        dialogStage.setScene(new Scene(layout));
-        dialogStage.show();
-        dialogStage.setOnCloseRequest(t -> {
-            dialogStage.close();
-        });
-    }
 
     private void changeHistoryBox() {
-        Stage dialogStage = new Stage();
-
-
-        VBox layout = new VBox();
-        HBox accHbox = new HBox(accHistNr);
-        HBox accNrHbox = new HBox(accHistNrText);
-
-        HBox hBox = new HBox(firstDate);
-        HBox pinHbox = new HBox(secondDate);
-        HBox prNrArea = new HBox(d1);
-        HBox pinArea = new HBox(d2);
-        HBox buttons = new HBox(okbuttonhistory);
-        layout.getChildren().add(accHbox);
-        layout.getChildren().add(accNrHbox);
-        layout.getChildren().add(hBox);
-        layout.getChildren().add(prNrArea);
-        layout.getChildren().add(pinHbox);
-        layout.getChildren().add(pinArea);
-        layout.getChildren().add(buttons);
-        layout.setMinSize(400, 50);
-        buttons.setAlignment(Pos.BOTTOM_CENTER);
-        buttons.setMinSize(300, 60);
-        firstDate.setAlignment(Pos.CENTER);
-        accHbox.setAlignment(Pos.CENTER);
-        accNrHbox.setAlignment(Pos.CENTER);
-        hBox.setAlignment(Pos.CENTER);
-        pinHbox.setAlignment(Pos.CENTER);
-        prNrArea.setAlignment(Pos.CENTER);
-        prNrArea.setPadding(new Insets(15));
-        pinArea.setAlignment(Pos.CENTER);
-        pinArea.setPadding(new Insets(15));
-        okbuttonhistory.setPrefSize(88, 45);
-        buttons.setPadding(new Insets(15, 0, 10, 0));
-        okbuttonhistory.setCursor(Cursor.HAND);
-
-        okbuttonhistory.setOnAction(actionEvent -> {
-            System.out.println(d1.getValue());
-            System.out.println(d2.getValue());
-            System.out.println(accHistNrText.getText());
-            int accId = Integer.parseInt(accHistNrText.getText());
-            String s1 = d1.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            String s2 = d2.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        ahs.changeHistoryBox();
+        ahs.getOkbuttonhistory().setOnAction(actionEvent -> {
+            int accId = Integer.parseInt(ahs.getAccHistNrText().getText());
+            String s1 = ahs.getD1().getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            String s2 = ahs.getD2().getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             System.out.println(s1 + " " + s2);
             List<AccountHistory> historyList = rep.getIntervalHistory(accId,
                     s1, s2);
@@ -195,170 +87,51 @@ public class AccountHandlingSceneController {
 
             List<String> outputHist = historyList.stream().map(a ->"Före: " +  a.getBalanceBefore() + " Uttag: " + a.getWithdraw() + " Efter: " +
                     a.getBalanceAfter() + " Datum:" + a .getDate()).collect(Collectors.toList());
-            showHistory(outputHist);
-        });
-
-        dialogStage.setResizable(false);
-        dialogStage.setScene(new Scene(layout));
-        dialogStage.show();
-        dialogStage.setOnCloseRequest(t -> {
-            dialogStage.close();
+            ahs.showHistory(outputHist);
         });
     }
 
     public void closeAccountBox() {
-
-        Stage dialogStage = new Stage();
-        VBox layout = new VBox();
-        HBox hBox = new HBox(closeLabel);
-        HBox prNrArea = new HBox(accountNumber);
-        HBox buttons = new HBox(okbutton);
-        layout.getChildren().add(hBox);
-        layout.getChildren().add(prNrArea);
-        layout.getChildren().add(buttons);
-        layout.setMinSize(400, 50);
-        buttons.setAlignment(Pos.BOTTOM_CENTER);
-        buttons.setMinSize(300, 60);
-        closeLabel.setAlignment(Pos.CENTER);
-        hBox.setAlignment(Pos.CENTER);
-        prNrArea.setAlignment(Pos.CENTER);
-        prNrArea.setPadding(new Insets(15));
-        okbutton.setPrefSize(88, 45);
-        buttons.setPadding(new Insets(15, 0, 10, 0));
-        okbutton.setCursor(Cursor.HAND);
-
-        okbutton.setOnAction(actionEvent -> {
-            accID = Integer.parseInt(accountNumber.getText());
+        ahs.closeAccountBox();
+        ahs.getOkbutton().setOnAction(actionEvent -> {
+            int accID = Integer.parseInt(ahs.getAccountNumber().getText());
             rep.deleteAccount(accID);
-            dialogStage.close();
-        });
-
-        dialogStage.setResizable(false);
-        dialogStage.setScene(new Scene(layout));
-        dialogStage.show();
-        dialogStage.setOnCloseRequest(t -> {
-            dialogStage.close();
+            ahs.getDialogStage().close();
         });
     }
 
     public void newAccountBox() {
-        Stage dialogStage = new Stage();
-        VBox layout = new VBox();
-        HBox hBox = new HBox(newAccountLabel);
-        HBox nrArea = new HBox(createNewAccountTF);
-        HBox buttons = new HBox(okButtonNewAccount);
-        layout.getChildren().add(hBox);
-        layout.getChildren().add(nrArea);
-        layout.getChildren().add(buttons);
-        layout.setMinSize(400, 50);
-        buttons.setAlignment(Pos.BOTTOM_CENTER);
-        buttons.setMinSize(300, 60);
-        closeLabel.setAlignment(Pos.CENTER);
-        hBox.setAlignment(Pos.CENTER);
-        nrArea.setAlignment(Pos.CENTER);
-        nrArea.setPadding(new Insets(15));
-        okButtonNewAccount.setPrefSize(88, 45);
-        buttons.setPadding(new Insets(15, 0, 10, 0));
-        okButtonNewAccount.setCursor(Cursor.HAND);
-
-        okButtonNewAccount.setOnAction(actionEvent -> {
-            custID = Integer.parseInt(createNewAccountTF.getText());
+        ahs.newAccountBox();
+        ahs.getOkButtonNewAccount().setOnAction(actionEvent -> {
+            int custID = Integer.parseInt(ahs.getCreateNewAccountTF().getText());
             rep.createAccount(custID);
-            dialogStage.close();
+            ahs.getDialogStage().close();
         });
 
-        dialogStage.setResizable(false);
-        dialogStage.setScene(new Scene(layout));
-        dialogStage.show();
-        dialogStage.setOnCloseRequest(t -> {
-            dialogStage.close();
-        });
     }
 
     public void changeRateBox() {
-        Stage dialogStage = new Stage();
-        VBox layout = new VBox();
-        HBox hBox = new HBox(changeRateLabelAccount);
-        HBox pinHbox = new HBox(changeRateLabelRate);
-        HBox prNrArea = new HBox(changeRateTFAccount);
-        HBox pinArea = new HBox(changeRateTFRate);
-        HBox buttons = new HBox(okButtonChangeRate);
-        layout.getChildren().add(hBox);
-        layout.getChildren().add(prNrArea);
-        layout.getChildren().add(pinHbox);
-        layout.getChildren().add(pinArea);
-        layout.getChildren().add(buttons);
-        layout.setMinSize(400, 50);
-        buttons.setAlignment(Pos.BOTTOM_CENTER);
-        buttons.setMinSize(300, 60);
-        changeRateLabelAccount.setAlignment(Pos.CENTER);
-        hBox.setAlignment(Pos.CENTER);
-        pinHbox.setAlignment(Pos.CENTER);
-        prNrArea.setAlignment(Pos.CENTER);
-        prNrArea.setPadding(new Insets(15));
-        pinArea.setAlignment(Pos.CENTER);
-        pinArea.setPadding(new Insets(15));
-        okButtonChangeRate.setPrefSize(88, 45);
-        buttons.setPadding(new Insets(15, 0, 10, 0));
-        okButtonChangeRate.setCursor(Cursor.HAND);
-
-        okButtonChangeRate.setOnAction(actionEvent -> {
-            accountnumberChangeRate = Integer.parseInt(changeRateTFAccount.getText());
-            rateChangeRate = Double.parseDouble(changeRateTFRate.getText());
+        ahs.changeRateBox();
+        ahs.getOkButtonChangeRate().setOnAction(actionEvent -> {
+            int accountnumberChangeRate = Integer.parseInt(ahs.getChangeRateTFAccount().getText());
+            double rateChangeRate = Double.parseDouble(ahs.getChangeRateTFRate().getText());
             rep.changeRateForAccount(accountnumberChangeRate, rateChangeRate);
-            dialogStage.close();
+            ahs.getDialogStage().close();
         });
 
-        dialogStage.setResizable(false);
-        dialogStage.setScene(new Scene(layout));
-        dialogStage.show();
-        dialogStage.setOnCloseRequest(t -> {
-            dialogStage.close();
-        });
     }
 
 
 
     public void addFundsToAccountBox(){
-        Stage dialogStage = new Stage();
-        VBox layout = new VBox();
-        HBox hBox = new HBox(addFundsLabelAccount);
-        HBox pinHbox = new HBox(addFundsLabelAmount);
-        HBox prNrArea = new HBox(addFundsTFAccount);
-        HBox pinArea = new HBox(addFundsTFAmount);
-        HBox buttons = new HBox(okButtonAddFunds);
-        layout.getChildren().add(hBox);
-        layout.getChildren().add(prNrArea);
-        layout.getChildren().add(pinHbox);
-        layout.getChildren().add(pinArea);
-        layout.getChildren().add(buttons);
-        layout.setMinSize(400,50);
-        buttons.setAlignment(Pos.BOTTOM_CENTER);
-        buttons.setMinSize(300,60);
-        addFundsLabelAccount.setAlignment(Pos.CENTER);
-        hBox.setAlignment(Pos.CENTER);
-        pinHbox.setAlignment(Pos.CENTER);
-        prNrArea.setAlignment(Pos.CENTER);
-        prNrArea.setPadding(new Insets(15));
-        pinArea.setAlignment(Pos.CENTER);
-        pinArea.setPadding(new Insets(15));
-        okButtonAddFunds.setPrefSize(88,45);
-        buttons.setPadding(new Insets(15, 0, 10, 0));
-        okButtonAddFunds.setCursor(Cursor.HAND);
 
-        okButtonAddFunds.setOnAction(actionEvent -> {
-            accountNumberInt = Integer.parseInt(addFundsTFAccount.getText());
-            amount = Integer.parseInt(addFundsTFAmount.getText());
+        ahs.getOkButtonAddFunds().setOnAction(actionEvent -> {
+            int accountNumberInt = Integer.parseInt(ahs.getAddFundsTFAccount().getText());
+            int amount = Integer.parseInt(ahs.getAddFundsTFAmount().getText());
             rep.depositIntoAccount(accountNumberInt, amount);
-            dialogStage.close();
+            ahs.getDialogStage().close();
         });
 
-        dialogStage.setResizable(false);
-        dialogStage.setScene(new Scene(layout));
-        dialogStage.show();
-        dialogStage.setOnCloseRequest(t -> {
-            dialogStage.close();
-        });
     }
 
 }
