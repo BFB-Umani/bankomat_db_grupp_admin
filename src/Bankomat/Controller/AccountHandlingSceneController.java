@@ -124,7 +124,7 @@ public class AccountHandlingSceneController {
 
 
     public void addFundsToAccountBox(){
-
+        ahs.addFundsToAccountBox();
         ahs.getOkButtonAddFunds().setOnAction(actionEvent -> {
             int accountNumberInt = Integer.parseInt(ahs.getAddFundsTFAccount().getText());
             int amount = Integer.parseInt(ahs.getAddFundsTFAmount().getText());
