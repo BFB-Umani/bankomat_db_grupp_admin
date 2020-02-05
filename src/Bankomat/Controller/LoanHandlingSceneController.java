@@ -4,10 +4,13 @@ import Bankomat.Database.Repository;
 import Bankomat.Main;
 import Bankomat.Model.Admin;
 import Bankomat.Model.Loan;
+import Bankomat.Model.LoanToCustomer;
 import Bankomat.View.LoanHandlingScene;
 
 
 import javax.swing.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class LoanHandlingSceneController {
@@ -86,9 +89,17 @@ public class LoanHandlingSceneController {
     public void pendingLoanBox() {
         lhs.pendingLoanBox();
         lhs.getSeePendingLoan().setOnAction(actionEvent -> {
-            loanToCustomer = rep.getPendingLoans();
+            List<LoanToCustomer> loanList = rep.getPendingLoans();
+            List<String> outputLoanList = loanList.stream().map(l -> "Id: " + l.getId() + " Namn: " + l.getClient().getFirstName() + " " + l.getClient().getFirstName() +
+                    " " + "PersNr: " + l.getClient().getPersonNr() + " Lånsumma: " + l.getLoan().getStartAmount() + " till den: " +
+                    l.getLoan().getPaymentPlan()).collect(Collectors.toList());
+            loanToCustomer = "";
+            for(String s: outputLoanList) {
+                System.out.println(s);
+                loanToCustomer += s + "\n";
+            }
             JOptionPane.showMessageDialog(null, loanToCustomer);
-            loanToCustomer = "pending:\n";
+//            loanToCustomer = "pending:\n";
         });
 
         lhs.getAcceptB().setOnAction(actionEvent -> {

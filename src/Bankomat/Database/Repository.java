@@ -256,23 +256,56 @@ public class Repository {
         }
     }
 
-    public String getPendingLoans(){
-        String pendingLoan = "";
+    public List<LoanToCustomer> getPendingLoans(){
+        LoanToCustomer LTC = null;
+        List<LoanToCustomer> LTCList = new ArrayList<>();
         try(PreparedStatement stmt = con.prepareCall("SELECT LoanToCustomerID, customerID, loanToCustomer.LoanID, pending, accepted, loan.startAmount from loantocustomer " +
                 "inner join loan on loan.loanID = loanToCustomer.loanID " +
                 "having pending = 1")) {
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) {
-                int loanToCustomerID = rs.getInt("LoanToCustomerID");
-                int amount = rs.getInt("startAmount");
-                pendingLoan += "ID: " + loanToCustomerID + " amount: " + amount + "\n";
+            while (rs.next()) {
+                LTC = new LoanToCustomer(rs.getInt("LoanToCustomerID"), getCustomerById(rs.getInt("CustomerID")),
+                       getLoanById(rs.getInt("LoanID")), rs.getBoolean("pending"), rs.getBoolean("accepted"));
+                LTCList.add(LTC);
             }
         }catch (SQLException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return pendingLoan;
+        return LTCList;
+    }
+
+    public Client getCustomerById(int custId) {
+        String query = "SELECT * from customer where CustomerID = ?";
+        Client client = null;
+        try(PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setInt(1, custId);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()) {
+                client = new Client(rs.getInt("CustomerID"), rs.getString("firstname"), rs.getString("lastname"),
+                       rs.getInt("pinCode") , rs.getString("personalNumber"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return client;
+    }
+
+    public Loan getLoanById(int loanId) {
+        String query = "SELECT * from loan where LoanID = ?";
+        Loan loan = null;
+        try(PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setInt(1, loanId);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()) {
+                loan = new Loan(rs.getInt("LoanID"), rs.getInt("startAmount"), rs.getInt("paidAmount"),
+                        rs.getDouble("interestRate"), rs.getString("paymentPlan"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return loan;
     }
 
     public void acceptOrDenyLoans(int loanID, int accepted) {
