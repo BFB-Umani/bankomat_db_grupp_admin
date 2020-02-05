@@ -5,18 +5,10 @@ import Bankomat.Main;
 import Bankomat.Model.Admin;
 import Bankomat.Model.Loan;
 import Bankomat.View.LoanHandlingScene;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Cursor;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
+
 
 import javax.swing.*;
+
 
 public class LoanHandlingSceneController {
 
@@ -25,7 +17,10 @@ public class LoanHandlingSceneController {
     private Main main;
     private Admin admin;
     private String newDate;
+    private String loanToCustomer = "pending:\n";
     private int accountnumberChangeRate;
+    private int pendingLoanID;
+    private int accepted;
     private double rateChangeRate;
 
     public LoanHandlingSceneController(LoanHandlingScene loanHandlingScene, Main main, Repository rep, Admin admin) {
@@ -56,6 +51,10 @@ public class LoanHandlingSceneController {
             changeRateBox();
 
         });
+
+        lhs.getAccDenLoan().setOnAction(actionEvent -> {
+            pendingLoanBox();
+        });
     }
 
     public void changeToAdminHub() {
@@ -79,6 +78,30 @@ public class LoanHandlingSceneController {
             accountnumberChangeRate = Integer.parseInt(lhs.getChangeRateTFAccount().getText());
             newDate = lhs.getChangeRateTFRate().getText();
             rep.changePaymentPlanForLoan(accountnumberChangeRate, newDate);
+            lhs.getDialogStage().close();
+        });
+
+    }
+
+    public void pendingLoanBox() {
+        lhs.pendingLoanBox();
+        lhs.getSeePendingLoan().setOnAction(actionEvent -> {
+            loanToCustomer = rep.getPendingLoans();
+            JOptionPane.showMessageDialog(null, loanToCustomer);
+            loanToCustomer = "pending:\n";
+        });
+
+        lhs.getAcceptB().setOnAction(actionEvent -> {
+            pendingLoanID = Integer.parseInt(lhs.getPendingLoanTF().getText());
+            accepted = 1;
+            rep.acceptOrDenyLoans(pendingLoanID, accepted);
+            lhs.getDialogStage().close();
+        });
+
+        lhs.getDenyB().setOnAction(actionEvent -> {
+            pendingLoanID = Integer.parseInt(lhs.getPendingLoanTF().getText());
+            accepted = 0;
+            rep.acceptOrDenyLoans(pendingLoanID, accepted);
             lhs.getDialogStage().close();
         });
 

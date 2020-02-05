@@ -19,18 +19,24 @@ public class LoanHandlingScene {
     private Button paymentPlan = new Button("show payment Plan");
     private Button changePayment = new Button("update payment plan");
     private Button changeRent = new Button("update rate for loan");
+    private Button accDenLoan = new Button("accept or deny loans");
     private Button backB = new Button("back");
+    private Button seePendingLoan = new Button("see pending loans");
     private Label changeRateLabelAccount = new Label("Ange kontonummer");
     private Label changeRateLabelRate = new Label("Ange ny ränta");
-    private Label updatePaymentPlanAccount = new Label("Ange konto för att byta betalningsplan på"); //update payment plan
+    private Label updatePaymentPlanAccount = new Label("Ange konto för att byta betalningsplan på");
     private Label updatePaymentPlanDate = new Label("Ange datum \"XXXX-XX-XX\"");
+    private Label pendingLoanID = new Label("Ange ID för lån du vill godkänna eller avslå");
 
     private TextField changeRateTFAccount = new TextField();
     private TextField changeRateTFRate = new TextField();
     private TextField updatePaymentTFAccount = new TextField();
     private TextField updatePaymentTFDate = new TextField();
+    private TextField pendingLoanTF = new TextField();
 
     private Button okB = new Button("OK");
+    private Button acceptB = new Button("godkänn");
+    private Button denyB = new Button("avslå");
     private Stage dialogStage;
 
     public void setUp() {
@@ -42,6 +48,7 @@ public class LoanHandlingScene {
         GridPane buttonLayout = new GridPane();
         buttonLayout.add(changeRent,0,0);
         buttonLayout.add(changePayment,1,0);
+        buttonLayout.add(accDenLoan,0,1);
         designLayout.getChildren().add(buttonLayout);
 
         clientHandlingLabel.setPrefSize(300,275);
@@ -52,9 +59,11 @@ public class LoanHandlingScene {
 
         changePayment.setPadding(new Insets(10));
         changeRent.setPadding(new Insets(10));
+        accDenLoan.setPadding(new Insets(10));
 
         changePayment.setMinSize(150,100);
         changeRent.setMinSize(150,100);
+        accDenLoan.setMinSize(150,100);
 
         buttonLayout.setAlignment(Pos.CENTER);
         buttonLayout.setVgap(10);
@@ -130,6 +139,36 @@ public class LoanHandlingScene {
         });
     }
 
+    public void pendingLoanBox() {
+        dialogStage = new Stage();
+        VBox layout = new VBox();
+        HBox hBox = new HBox(pendingLoanID);
+        HBox prNrArea = new HBox(pendingLoanTF);
+        HBox buttons = new HBox(acceptB, denyB);
+        layout.getChildren().add(seePendingLoan);
+        layout.getChildren().add(hBox);
+        layout.getChildren().add(prNrArea);
+        layout.getChildren().add(buttons);
+        layout.setMinSize(400, 50);
+        buttons.setAlignment(Pos.BOTTOM_CENTER);
+        buttons.setMinSize(300, 60);
+        pendingLoanID.setAlignment(Pos.CENTER);
+        hBox.setAlignment(Pos.CENTER);
+        prNrArea.setAlignment(Pos.CENTER);
+        prNrArea.setPadding(new Insets(15));
+        acceptB.setPrefSize(88, 45);
+        denyB.setPrefSize(88, 45);
+        buttons.setPadding(new Insets(15, 0, 10, 0));
+        acceptB.setCursor(Cursor.HAND);
+        denyB.setCursor(Cursor.HAND);
+        dialogStage.setResizable(false);
+        dialogStage.setScene(new Scene(layout));
+        dialogStage.show();
+        dialogStage.setOnCloseRequest(t -> {
+            dialogStage.close();
+        });
+    }
+
     public VBox getDesignLayout() {
         return designLayout;
     }
@@ -162,16 +201,28 @@ public class LoanHandlingScene {
         return changeRateTFRate;
     }
 
-    public TextField getUpdatePaymentTFAccount() {
-        return updatePaymentTFAccount;
-    }
-
-    public TextField getUpdatePaymentTFDate() {
-        return updatePaymentTFDate;
-    }
-
     public Button getOkB() {
         return okB;
+    }
+
+    public Button getAcceptB() {
+        return acceptB;
+    }
+
+    public Button getDenyB() {
+        return denyB;
+    }
+
+    public Button getAccDenLoan() {
+        return accDenLoan;
+    }
+
+    public Button getSeePendingLoan() {
+        return seePendingLoan;
+    }
+
+    public TextField getPendingLoanTF() {
+        return pendingLoanTF;
     }
 
     public Stage getDialogStage() {

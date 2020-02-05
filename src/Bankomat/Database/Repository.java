@@ -256,5 +256,36 @@ public class Repository {
         }
     }
 
+    public String getPendingLoans(){
+        String pendingLoan = "";
+        try(PreparedStatement stmt = con.prepareCall("SELECT LoanToCustomerID, customerID, loanToCustomer.LoanID, pending, accepted, loan.startAmount from loantocustomer " +
+                "inner join loan on loan.loanID = loanToCustomer.loanID " +
+                "having pending = 1")) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int loanToCustomerID = rs.getInt("LoanToCustomerID");
+                int amount = rs.getInt("startAmount");
+                pendingLoan += "ID: " + loanToCustomerID + " amount: " + amount + "\n";
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return pendingLoan;
+    }
+
+    public void acceptOrDenyLoans(int loanID, int accepted) {
+        try (CallableStatement stmt = con.prepareCall("CALL acceptOrDenyLoans(?, ?);")) {
+            stmt.setInt(1, loanID);
+            stmt.setInt(2, accepted);
+            stmt.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 

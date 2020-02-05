@@ -2,29 +2,31 @@ package Bankomat.Model;
 
 public class LoanToCustomer {
     private int id;
-    private Client client;
-    private Loan loan;
+    private int clientID;
+    private int loanID;
     private boolean pending;
     private boolean accepted;
+    private int amount;
 
-    public LoanToCustomer(int id, Client client, Loan loan, boolean pending, boolean accepted) {
+    public LoanToCustomer(int id, int clientID, int loanID, boolean pending, boolean accepted, int amount) {
         this.id = id;
-        this.client = client;
-        this.loan = loan;
+        this.clientID = clientID;
+        this.loanID = loanID;
         this.pending = pending;
         this.accepted = accepted;
+        this.amount = amount;
     }
 
     public int getId() {
         return id;
     }
 
-    public Client getClient() {
-        return client;
+    public int getClientID() {
+        return clientID;
     }
 
-    public Loan getLoan() {
-        return loan;
+    public int getLoanID() {
+        return loanID;
     }
 
     public boolean isPending() {
@@ -33,5 +35,9 @@ public class LoanToCustomer {
 
     public boolean isAccepted() {
         return accepted;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 }

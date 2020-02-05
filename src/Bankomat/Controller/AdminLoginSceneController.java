@@ -3,7 +3,6 @@ package Bankomat.Controller;
 import Bankomat.Database.Repository;
 import Bankomat.Model.Admin;
 import Bankomat.Main;
-import Bankomat.Model.Client;
 import Bankomat.View.AdminLoginScene;
 
 import javax.swing.*;
