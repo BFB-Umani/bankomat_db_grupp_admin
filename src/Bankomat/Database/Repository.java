@@ -39,30 +39,7 @@ public class Repository {
         return accountHistoryList;
     }
 
-    // Tar ut alla lån en kund kan ha på knappen "Konton&Lån"
-    public List<Loan> getLoans(int custId) {
-        List<Loan> loanList = new ArrayList<>();
 
-        String query = "SELECT * from loantocustomer " +
-                "    inner join loan l on loantocustomer.LoanID = l.LoanID" +
-                "    where CustomerID = ?;";
-
-        try (PreparedStatement stmt = con.prepareCall(query)) {
-            stmt.setInt(1, custId);
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                Admin admin = getAdminById(rs.getInt("admin"));
-                Loan loan = new Loan(rs.getInt("LoanID"), rs.getInt("startAmount"), rs.getInt("paidAmount"),
-                        rs.getDouble("interestRate"), rs.getString("paymentPlan"));
-                loanList.add(loan);
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return loanList;
-    }
 
     // Retunerar ett objekt av Admin baserat på id:n man skickar in
     public Admin getAdminById(int adminId) {
@@ -83,38 +60,7 @@ public class Repository {
         return admin;
     }
 
-    // Tar ut pengar från valt konto
-    public boolean withdrawMoney(int accId, int amount) {
-        String query = "CALL WithdrawFromAccount(?, ?)";
-
-        try (CallableStatement stmt = con.prepareCall(query)) {
-            stmt.setInt(1, accId);
-            stmt.setInt(2, amount);
-            stmt.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return true;
-    }
-
-    // Lägger in konton i en lista. Tar ut accountId skickar till "getAccountById()" som returnerar Account.
-    public List<Account> getAccounts(int custId) {
-        List<Account> accountList = new ArrayList<>();
-
-        try (CallableStatement stmt = con.prepareCall("CALL bankdatabase.accountState(?)")) {
-            stmt.setInt(1, custId);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                accountList.add(getAccountById(rs.getInt("AccountId")));
-            }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return accountList;
-    }
+    /
 
     // Tar accountId och skapar ett Account objekt
     public Account getAccountById(int accId) {
