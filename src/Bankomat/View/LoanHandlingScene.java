@@ -145,7 +145,8 @@ public class LoanHandlingScene {
         HBox hBox = new HBox(pendingLoanID);
         HBox prNrArea = new HBox(pendingLoanTF);
         HBox buttons = new HBox(acceptB, denyB);
-        layout.getChildren().add(seePendingLoan);
+        HBox seePending = new HBox(seePendingLoan);
+        layout.getChildren().add(seePending);
         layout.getChildren().add(hBox);
         layout.getChildren().add(prNrArea);
         layout.getChildren().add(buttons);
@@ -153,12 +154,14 @@ public class LoanHandlingScene {
         buttons.setAlignment(Pos.BOTTOM_CENTER);
         buttons.setMinSize(300, 60);
         pendingLoanID.setAlignment(Pos.CENTER);
+        seePending.setAlignment(Pos.CENTER);
         hBox.setAlignment(Pos.CENTER);
         prNrArea.setAlignment(Pos.CENTER);
         prNrArea.setPadding(new Insets(15));
         acceptB.setPrefSize(88, 45);
         denyB.setPrefSize(88, 45);
         buttons.setPadding(new Insets(15, 0, 10, 0));
+        seePending.setPadding(new Insets(15, 0, 10, 0));
         acceptB.setCursor(Cursor.HAND);
         denyB.setCursor(Cursor.HAND);
         dialogStage.setResizable(false);

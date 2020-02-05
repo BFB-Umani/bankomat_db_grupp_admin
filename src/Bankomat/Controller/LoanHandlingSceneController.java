@@ -95,7 +95,6 @@ public class LoanHandlingSceneController {
                     l.getLoan().getPaymentPlan()).collect(Collectors.toList());
             loanToCustomer = "";
             for(String s: outputLoanList) {
-                System.out.println(s);
                 loanToCustomer += s + "\n";
             }
             JOptionPane.showMessageDialog(null, loanToCustomer);
