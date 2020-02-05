@@ -60,7 +60,6 @@ public class Repository {
         return admin;
     }
 
-    /
 
     // Tar accountId och skapar ett Account objekt
     public Account getAccountById(int accId) {
